@@ -1,0 +1,31 @@
+<div class="card">
+  <button pButton type="button" label="Add New Collab" class="ui-button-success" (click)="addNewCollab()"></button>
+
+  <p-table [value]="collaborateurs">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>Nom Complet</th>
+        <th>Poste</th>
+        <th>Type Contrat</th>
+        <th>Years of Experience</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-collaborateur>
+      <tr>
+        <td>{{ collaborateur.id }}</td>
+        <td>{{ collaborateur.nomComplet }}</td>
+        <td>{{ collaborateur.poste?.posteName }}</td>
+        <td>{{ collaborateur.contractType?.type }}</td>
+        <td>{{ collaborateur.anneeExperience }}</td>
+        <td>
+          <button pButton type="button" label="Update" class="ui-button-warning" (click)="updateCollab(collaborateur.id)"></button>
+          <button pButton type="button" label="Delete" class="ui-button-danger" (click)="deleteCollab(collaborateur.id)"></button>
+          <button pButton type="button" label="Download PDF" class="ui-button-info" (click)="downloadPDF(collaborateur.id)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+

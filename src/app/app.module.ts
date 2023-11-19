@@ -1,16 +1,30 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CollaborateurListComponent } from './component/collaborateur-list/collaborateur-list.component';
+import { AddCollaborateurComponent } from './component/add-collaborateur/add-collaborateur.component';
+import { BrowserModule } from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+import { TableModule } from 'primeng/table';
+import { AppLayoutModule } from './layout/app.layout.module';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CollaborateurListComponent,
+    AddCollaborateurComponent,
+
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    TableModule,
+    AppLayoutModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]
