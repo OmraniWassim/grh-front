@@ -13,6 +13,11 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { CalendarModule } from "primeng/calendar";
+import { DropdownModule } from 'primeng/dropdown';
+import {CheckboxModule} from 'primeng/checkbox';
+import { FileUploadModule } from 'primeng/fileupload';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 
 @NgModule({
@@ -33,7 +38,13 @@ import { CalendarModule } from "primeng/calendar";
     FormsModule,
     InputTextModule,
     CardModule,
-    CalendarModule
+    CalendarModule,
+    DropdownModule,
+    CheckboxModule,
+    FileUploadModule,
+    ReactiveFormsModule,
+    RadioButtonModule
+
 
   ],
   providers: [],

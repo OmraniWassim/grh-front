@@ -3,17 +3,17 @@
     <div class="card p-fluid">
 			<div class="p-formgrid grid">
 				<div class="field col">
-          <label for="cin">CIN</label>
+          <label for="cin">CIN*</label>
           <input pInputText id="cin" type="number" [(ngModel)]="cin" />
         </div>
         <div class="field col">
-          <label for="nomComplet">Nom Complet</label>
+          <label for="nomComplet">Nom Complet*</label>
           <input pInputText id="nomComplet" type="text" [(ngModel)]="nomComplet" />
         </div>
 			</div>
       <div class="p-formgrid grid">
         <div class="field col">
-          <label for="numCompte">Num Compte</label>
+          <label for="numCompte">Num Compte*</label>
           <input pInputText id="numCompte" type="number" [(ngModel)]="numCompte" />
         </div>
         <div class="field col">
@@ -23,12 +23,12 @@
 			</div>
       <div class="p-formgrid grid">
 				<div class="field col">
-          <label for="dateNaissance">Date Naissance</label>
+          <label for="dateNaissance">Date Naissance*</label>
           <p-calendar [showIcon]="true" inputId="dateNaissance" [(ngModel)]="dateNaissance"></p-calendar>
 
         </div>
         <div class="field col">
-          <label for="numTelephone">Num Telephone</label>
+          <label for="numTelephone">Num Telephone*</label>
           <input pInputText id="numTelephone" type="number" [(ngModel)]="numTelephone" />
         </div>
 			</div>
@@ -46,27 +46,125 @@
   </p-card>
 
   <p-card header="Qualification">
-    <!-- Content for Qualification section -->
+    <div class="card p-fluid">
+      <div class="p-formgrid grid">
+				<div class="field col">
+          <label for="natureEtude">Nature d'Etude*</label>
+          <p-dropdown id="natureEtude" [options]="natureEtudeOptions" [(ngModel)]="selectedNatureEtude" optionLabel="label" optionValue="value"></p-dropdown>
+        </div>
+        <div class="field col">
+          <label for="certifications">Certifications</label>
+          <input pInputText id="certifications" type="text" [(ngModel)]="certifications" />
+        </div>
+      </div>
+      <div class="p-formgrid grid">
+				<div class="field col">
+          <label for="niveauEtude">Niveau d'Etude*</label>
+          <p-dropdown id="niveauEtude" [options]="niveauEtudeOptions" [(ngModel)]="selectedNiveauEtude" optionLabel="label" optionValue="value"></p-dropdown>
+        </div>
+        <div class="field col">
+          <label for="anneeExperience">Annee d'Experience*</label>
+          <input pInputText id="anneeExperience" type="text" [(ngModel)]="anneeExperience" />
+        </div>
+			</div>
+    </div>
   </p-card>
 
   <p-card header="Contrat">
-    <!-- Content for Contrat section -->
+    <div class="card p-fluid">
+      <div class="p-formgrid grid">
+				<div class="field col">
+          <label>Type de Contrat*</label>
+          <p-dropdown [options]="contractTypes" optionLabel="label" optionValue="value" [(ngModel)]="selectedContractType"></p-dropdown>
+        </div>
+        <div class="field col">
+          <label>Salaire de Base*</label>
+          <input pInputText type="text" [(ngModel)]="salaireDeBase" />
+        </div>
+      </div>
+      <div class="p-formgrid grid">
+				<div class="field col">
+          <label>Avantage sur Salaire</label>
+          <p-dropdown [options]="avantages" optionLabel="label" optionValue="value" [(ngModel)]="selectedAvantage"></p-dropdown>
+        </div>
+        <div class="field col">
+          <label>Date Début de Contrat</label>
+          <p-calendar [showIcon]="true" [(ngModel)]="dateDebutContrat"></p-calendar>
+        </div>
+			</div>
+    </div>
   </p-card>
 
   <p-card header="Grade">
-    <!-- Content for Grade section -->
+    <div class="card p-fluid">
+      <div class="p-formgrid grid">
+				<div class="field col">
+          <label>Département*</label>
+          <p-dropdown [options]="departements" optionLabel="label" optionValue="value" [(ngModel)]="selectedDepartement"></p-dropdown>
+        </div>
+        <div class="field col">
+          <label>Poste*</label>
+          <p-dropdown [options]="postes" optionLabel="label" optionValue="value" [(ngModel)]="selectedPoste"></p-dropdown>
+        </div>
+      </div>
+      <div class="p-formgrid grid lg:col-9">
+          <label>Responsable</label>
+          <p-dropdown [options]="responsables" optionLabel="label" optionValue="value" [(ngModel)]="selectedResponsable"></p-dropdown>
+      </div>
+    </div>
   </p-card>
 
-  <p-card header="Pieces Jointes">
-    <!-- Content for Pieces Jointes section -->
+  <p-card header="Pieces Jointes" class="pieces-card">
+    <div class="card p-fluid">
+      <p-fileUpload mode="basic"  chooseLabel="Choose" name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php" accept="image/*" [maxFileSize]="1000000" (onUpload)="onBasicUpload()"></p-fileUpload>
+      <p-table [value]="pieces">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Documents</th>
+            <th>Obligatoire</th>
+            <th>Status</th>
+          </tr>
+        </ng-template>
+        <tbody>
+          <tr *ngFor="let document of documents">
+            <td>{{ document.name }}</td>
+            <td>{{ document.obligatoire }}</td>
+            <td>
+              <p-checkbox></p-checkbox>
+            </td>
+          </tr>
+        </tbody>
+      </p-table>
+    </div>
   </p-card>
-
   <p-card header="Autre Informations">
-    <!-- Content for Autre Informations section -->
+    <div class="card p-fluid">
+      <div class="p-formgrid grid">
+				<div class="field-checkbox">
+          <p-checkbox name="group1" value="true" [(ngModel)]="recommendation" id="recommendation"></p-checkbox>
+          <label for="recommendation" class="ml-2">Recommendation</label>
+        </div>
+        <div *ngIf="recommendation != false" class="col-12 md:col-6">
+          <label>Collaborateurs</label>
+          <input pInputText id="collaborateurs" type="text" [(ngModel)]="collaborateurs"  />
+        </div>
+        <div *ngIf="recommendation != false" class="col-12 md:col-4">
+          <label class="block text-sm font-medium text-gray-700">Comment</label>
+          <textarea pInputTextarea [(ngModel)]="comment" class="mt-1 p-2"></textarea>
+        </div>
+      </div>
+
+    </div>
   </p-card>
+
+
+
+
+
+
 
   <div class="button-container">
-    <button pButton type="button" label="Enregistrer" class="ui-button-success"></button>
-    <button pButton type="button" label="Initialiser" class="ui-button-secondary"></button>
+    <button pButton type="button" label="enregistrer" (click)="test()"  class="p-button-success"></button>
+    <button pButton type="button" label="Initialiser"    class="p-button-secondary"></button>
   </div>
 </div>
