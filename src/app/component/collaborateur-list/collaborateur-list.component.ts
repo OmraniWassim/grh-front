@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CollaborateurService } from 'src/app/service/collaborateur.service';
 
 
+
 @Component({
   selector: 'app-collaborateur-list',
   templateUrl: './collaborateur-list.component.html',
@@ -20,7 +21,7 @@ export class CollaborateurListComponent implements OnInit {
     this.loadCollaborateurs();
   }
   displayInformation(){
-    
+
   }
 
   loadCollaborateurs() {
