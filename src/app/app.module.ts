@@ -8,6 +8,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { TableModule } from 'primeng/table';
 import { AppLayoutModule } from './layout/app.layout.module';
+import {ButtonModule} from 'primeng/button';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { AppLayoutModule } from './layout/app.layout.module';
     BrowserAnimationsModule,
     HttpClientModule,
     TableModule,
-    AppLayoutModule
+    AppLayoutModule,
+    ButtonModule
 
   ],
   providers: [],

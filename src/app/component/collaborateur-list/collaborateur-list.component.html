@@ -1,6 +1,6 @@
 <div class="card">
   <button pButton type="button" label="Add New Collab" class="ui-button-success" (click)="addNewCollab()"></button>
-
+  <p></p>
   <p-table [value]="collaborateurs">
     <ng-template pTemplate="header">
       <tr>
@@ -20,9 +20,9 @@
         <td>{{ collaborateur.contractType?.type }}</td>
         <td>{{ collaborateur.anneeExperience }}</td>
         <td>
-          <button pButton type="button" label="Update" class="ui-button-warning" (click)="updateCollab(collaborateur.id)"></button>
-          <button pButton type="button" label="Delete" class="ui-button-danger" (click)="deleteCollab(collaborateur.id)"></button>
-          <button pButton type="button" label="Download PDF" class="ui-button-info" (click)="downloadPDF(collaborateur.id)"></button>
+          <i class="pi pi-search" (click)="updateCollab(collaborateur.id)"></i>
+          <i class="pi pi-trash" (click)="deleteCollab(collaborateur.id)" ></i>
+          <i class="pi pi-file-pdf" (click)="downloadPDF(collaborateur.id)"></i>
         </td>
       </tr>
     </ng-template>

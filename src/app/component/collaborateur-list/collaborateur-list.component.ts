@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CollaborateurService } from 'src/app/service/collaborateur.service';
 
+
 @Component({
   selector: 'app-collaborateur-list',
   templateUrl: './collaborateur-list.component.html',
-  styleUrls: ['./collaborateur-list.component.css'],
+  styleUrls: ['./collaborateur-list.component.scss'],
 })
 export class CollaborateurListComponent implements OnInit {
   collaborateurs: any[] = []; // Adjust the type based on your actual Collaborateur model
@@ -17,8 +18,11 @@ export class CollaborateurListComponent implements OnInit {
   }
 
   loadCollaborateurs() {
+    console.log("enterd");
+
     this.collaborateurService.getAllCollaborateurs().subscribe((data) => {
       this.collaborateurs = data;
+      console.log("data =",data)
     });
   }
 
