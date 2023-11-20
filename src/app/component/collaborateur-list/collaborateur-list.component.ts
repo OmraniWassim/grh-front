@@ -9,6 +9,7 @@ import { CollaborateurService } from 'src/app/service/collaborateur.service';
   templateUrl: './collaborateur-list.component.html',
   styleUrls: ['./collaborateur-list.component.scss'],
 })
+
 export class CollaborateurListComponent implements OnInit {
   collaborateurs: any[] = [];
   masseSalariale:any;
