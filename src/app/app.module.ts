@@ -18,6 +18,7 @@ import {CheckboxModule} from 'primeng/checkbox';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     CheckboxModule,
     FileUploadModule,
     ReactiveFormsModule,
-    RadioButtonModule
+    RadioButtonModule,
+    BreadcrumbModule
 
 
   ],

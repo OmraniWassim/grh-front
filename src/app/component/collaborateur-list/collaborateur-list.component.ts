@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MenuItem } from 'primeng/api';
 import { CollaborateurService } from 'src/app/service/collaborateur.service';
 
 
@@ -15,11 +16,20 @@ export class CollaborateurListComponent implements OnInit {
   masseSalariale:any;
   pyramidesDesAges:any;
   salaireMoyen:any;
+  breadcrumbItems: MenuItem[] =[];
 
   constructor(private collaborateurService: CollaborateurService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadCollaborateurs();
+    this.breadcrumbItems = [
+
+      {
+          label: 'Consult GRH', icon: 'pi pi-fw pi-search'
+      },
+
+  ];
+
   }
   displayInformation(){
 
@@ -44,7 +54,7 @@ export class CollaborateurListComponent implements OnInit {
 
   deleteCollab(collabId: number) {
     console.log("deleted");
-    
+
   }
 
   downloadPDF(collabId: number) {

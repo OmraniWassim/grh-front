@@ -1,6 +1,8 @@
-
+  <div class="card card-w-title">
+      <p-breadcrumb [model]="breadcrumbItems" [home]="{icon: 'pi pi-home'}"></p-breadcrumb>
+  </div>
 <div class="card">
-  
+
   <div class="additional-info text-right"> <!-- Added the text-right class -->
     <span class="p-float-label">
       <input type="text" placeholder="Masse salariale" pInputText />
@@ -12,7 +14,7 @@
       <input type="text" placeholder="Pyramides des ages" pInputText />
     </span>
   </div>
-  <button pButton type="button" label="Add New Collab" class="ui-button-success" (click)="addNewCollab()"></button>
+  <button pButton pRipple label="Ajouter collaborateur" icon="pi pi-plus" class="p-button-success mr-2" (click)="addNewCollab()"></button>
   <p></p>
   <p-table [value]="collaborateurs">
     <ng-template pTemplate="header">

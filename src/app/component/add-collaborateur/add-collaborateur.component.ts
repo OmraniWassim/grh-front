@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuItem } from 'primeng/api';
 import { PiecesJointes } from 'src/app/model/ContractType';
 
 @Component({
@@ -7,6 +8,11 @@ import { PiecesJointes } from 'src/app/model/ContractType';
   styleUrls: ['./add-collaborateur.component.css']
 })
 export class AddCollaborateurComponent implements OnInit {
+selectedTypeContrat: any;
+breadcrumbItems: MenuItem[]=[];
+onSubmit() {
+throw new Error('Method not implemented.');
+}
 test() {
 console.log("recomm=",this.recommendation);
 
@@ -55,6 +61,16 @@ comment!: string;
 
 
   ngOnInit(): void {
+    this.breadcrumbItems = [
+
+      {
+          label: 'Consult GRH', icon: 'pi pi-fw pi-search'
+      },
+      {
+        label: 'Nouveau collaborateur', icon: 'pi pi-fw pi-plus'
+     },
+
+  ];
   }
 
 }
