@@ -8,6 +8,14 @@ import { Component, OnInit } from '@angular/core';
 export class AddCollaborateurComponent implements OnInit {
 
   constructor() { }
+  cin!: number;
+  nomComplet!: string ;
+  numCompte!: number;
+  numSecuriteSociale!: number;
+  numTelephone!: number;
+  dateNaissance!: Date;
+  adresse!: string;
+  email!: string;
 
   ngOnInit(): void {
   }

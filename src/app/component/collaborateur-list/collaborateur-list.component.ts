@@ -9,12 +9,18 @@ import { CollaborateurService } from 'src/app/service/collaborateur.service';
   styleUrls: ['./collaborateur-list.component.scss'],
 })
 export class CollaborateurListComponent implements OnInit {
-  collaborateurs: any[] = []; // Adjust the type based on your actual Collaborateur model
+  collaborateurs: any[] = [];
+  masseSalariale:any;
+  pyramidesDesAges:any;
+  salaireMoyen:any;
 
   constructor(private collaborateurService: CollaborateurService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadCollaborateurs();
+  }
+  displayInformation(){
+    
   }
 
   loadCollaborateurs() {
@@ -35,7 +41,8 @@ export class CollaborateurListComponent implements OnInit {
   }
 
   deleteCollab(collabId: number) {
-    // Implement delete logic
+    console.log("deleted");
+    
   }
 
   downloadPDF(collabId: number) {

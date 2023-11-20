@@ -1,3 +1,72 @@
 <div class="card">
-  <p>add-collaborateur works!</p>
+  <p-card header="Informations Collaborateur">
+    <div class="card p-fluid">
+			<div class="p-formgrid grid">
+				<div class="field col">
+          <label for="cin">CIN</label>
+          <input pInputText id="cin" type="number" [(ngModel)]="cin" />
+        </div>
+        <div class="field col">
+          <label for="nomComplet">Nom Complet</label>
+          <input pInputText id="nomComplet" type="text" [(ngModel)]="nomComplet" />
+        </div>
+			</div>
+      <div class="p-formgrid grid">
+        <div class="field col">
+          <label for="numCompte">Num Compte</label>
+          <input pInputText id="numCompte" type="number" [(ngModel)]="numCompte" />
+        </div>
+        <div class="field col">
+          <label for="numSecuriteSociale">Num Securite Sociale</label>
+          <input pInputText id="numSecuriteSociale" type="number" [(ngModel)]="numSecuriteSociale" />
+        </div>
+			</div>
+      <div class="p-formgrid grid">
+				<div class="field col">
+          <label for="dateNaissance">Date Naissance</label>
+          <p-calendar [showIcon]="true" inputId="dateNaissance" [(ngModel)]="dateNaissance"></p-calendar>
+
+        </div>
+        <div class="field col">
+          <label for="numTelephone">Num Telephone</label>
+          <input pInputText id="numTelephone" type="number" [(ngModel)]="numTelephone" />
+        </div>
+			</div>
+      <div class="p-formgrid grid">
+				<div class="field col">
+          <label for="adresse">Adresse</label>
+          <input pInputText id="adresse" type="text" [(ngModel)]="adresse" />
+        </div>
+        <div class="field col">
+          <label for="email">Email</label>
+          <input pInputText id="email" type="email" [(ngModel)]="email" />
+        </div>
+			</div>
+		</div>
+  </p-card>
+
+  <p-card header="Qualification">
+    <!-- Content for Qualification section -->
+  </p-card>
+
+  <p-card header="Contrat">
+    <!-- Content for Contrat section -->
+  </p-card>
+
+  <p-card header="Grade">
+    <!-- Content for Grade section -->
+  </p-card>
+
+  <p-card header="Pieces Jointes">
+    <!-- Content for Pieces Jointes section -->
+  </p-card>
+
+  <p-card header="Autre Informations">
+    <!-- Content for Autre Informations section -->
+  </p-card>
+
+  <div class="button-container">
+    <button pButton type="button" label="Enregistrer" class="ui-button-success"></button>
+    <button pButton type="button" label="Initialiser" class="ui-button-secondary"></button>
+  </div>
 </div>

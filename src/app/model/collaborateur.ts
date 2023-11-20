@@ -18,7 +18,6 @@ export interface Collaborateur {
   email: string;
   certifications: string;
   anneeExperience: number;
-  salaireBase: number;
   dateDebutContrat: Date;
   recommandation: boolean;
   collaborateurRecommande: string;
@@ -29,7 +28,6 @@ export interface Collaborateur {
   contractType: ContractType;
   salaryAdvantage: SalaryAdvantage;
   poste: Poste;
-  departement: Departement;
   responsable: Responsable;
 }
 

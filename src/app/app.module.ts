@@ -9,6 +9,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { TableModule } from 'primeng/table';
 import { AppLayoutModule } from './layout/app.layout.module';
 import {ButtonModule} from 'primeng/button';
+import { FormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { CardModule } from 'primeng/card';
+import { CalendarModule } from "primeng/calendar";
 
 
 @NgModule({
@@ -25,7 +29,11 @@ import {ButtonModule} from 'primeng/button';
     HttpClientModule,
     TableModule,
     AppLayoutModule,
-    ButtonModule
+    ButtonModule,
+    FormsModule,
+    InputTextModule,
+    CardModule,
+    CalendarModule
 
   ],
   providers: [],

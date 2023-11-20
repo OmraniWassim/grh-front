@@ -1,4 +1,17 @@
+
 <div class="card">
+  
+  <div class="additional-info text-right"> <!-- Added the text-right class -->
+    <span class="p-float-label">
+      <input type="text" placeholder="Masse salariale" pInputText />
+    </span>
+    <span class="p-float-label">
+      <input type="text" placeholder="Salaire Moyen" pInputText />
+    </span>
+    <span class="p-float-label">
+      <input type="text" placeholder="Pyramides des ages" pInputText />
+    </span>
+  </div>
   <button pButton type="button" label="Add New Collab" class="ui-button-success" (click)="addNewCollab()"></button>
   <p></p>
   <p-table [value]="collaborateurs">
@@ -19,10 +32,10 @@
         <td>{{ collaborateur.poste?.posteName }}</td>
         <td>{{ collaborateur.contractType?.type }}</td>
         <td>{{ collaborateur.anneeExperience }}</td>
-        <td>
-          <i class="pi pi-search" (click)="updateCollab(collaborateur.id)"></i>
-          <i class="pi pi-trash" (click)="deleteCollab(collaborateur.id)" ></i>
-          <i class="pi pi-file-pdf" (click)="downloadPDF(collaborateur.id)"></i>
+        <td class="icon-cell">
+          <i class="pi pi-search" style="font-size: 2rem"  (click)="updateCollab(collaborateur.id)"></i>
+          <i class="pi pi-trash" style="font-size: 2rem ; color: rgb(252, 0, 0)" (click)="deleteCollab(collaborateur.id)"></i>
+          <i class="pi pi-file-pdf" style="font-size: 2rem ; color: rgb(90, 205, 161)"(click)="downloadPDF(collaborateur.id)"></i>
         </td>
       </tr>
     </ng-template>
