@@ -19,6 +19,9 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { DialogModule } from 'primeng/dialog';
+import { MessageService } from 'primeng/api';
+import {MessagesModule} from 'primeng/messages';
 
 
 @NgModule({
@@ -45,11 +48,13 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
     FileUploadModule,
     ReactiveFormsModule,
     RadioButtonModule,
-    BreadcrumbModule
+    BreadcrumbModule,
+    DialogModule,
+    MessagesModule
 
 
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

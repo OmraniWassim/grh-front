@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { CollaborateurService } from 'src/app/service/collaborateur.service';
 
 
@@ -12,13 +12,17 @@ import { CollaborateurService } from 'src/app/service/collaborateur.service';
 })
 
 export class CollaborateurListComponent implements OnInit {
+
   collaborateurs: any[] = [];
   masseSalariale:any;
   pyramidesDesAges:any;
   salaireMoyen:any;
   breadcrumbItems: MenuItem[] =[];
+  deleteProductDialog: boolean=false;
+  collabNametoDelete: string="test";
+  collabIdTodelete: number=0;
 
-  constructor(private collaborateurService: CollaborateurService, private router: Router) {}
+  constructor(private collaborateurService: CollaborateurService, private router: Router,private messageService: MessageService) {}
 
   ngOnInit(): void {
     this.loadCollaborateurs();
@@ -31,9 +35,22 @@ export class CollaborateurListComponent implements OnInit {
   ];
 
   }
+
+  confirmDelete() {
+    this.deleteProductDialog = false;
+    console.log('deleted');
+    this.messageService.add({severity:'success', summary:'Service Message', detail:'Via MessageService'});
+  }
+
   displayInformation(){
 
   }
+  deleteProduct(collabId: number,name:string) {
+    this.deleteProductDialog = true;
+    this.collabNametoDelete=name;
+    this.collabIdTodelete=collabId;
+
+}
 
   loadCollaborateurs() {
     console.log("enterd");
