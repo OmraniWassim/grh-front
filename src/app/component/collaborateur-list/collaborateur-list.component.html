@@ -34,13 +34,15 @@
         <td>{{ collaborateur.poste?.posteName }}</td>
         <td>{{ collaborateur.contractType?.type }}</td>
         <td>{{ collaborateur.anneeExperience }}</td>
-        <td class="icon-cell">
-          <i class="pi pi-search" style="font-size: 2rem"  (click)="updateCollab(collaborateur.id)"></i>
-          <i class="pi pi-trash" style="font-size: 2rem ; color: rgb(252, 0, 0)" (click)="deleteCollab(collaborateur.id)"></i>
-          <i class="pi pi-file-pdf" style="font-size: 2rem ; color: rgb(90, 205, 161)"(click)="downloadPDF(collaborateur.id)"></i>
-          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(collaborateur.id,collaborateur.name)"></button>
+        
+        <td>
+          <div class="flex">
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="updateCollab(collaborateur.id)"></button>
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mr-2" (click)="deleteProduct(collaborateur.id,collaborateur.name)"></button>
+              <button pButton  pRipple icon="pi pi-file-pdf"  class="p-button-rounded p-button-danger" (click)="downloadPDF(collaborateur.id)"></button>
 
-        </td>
+          </div>
+      </td>
       </tr>
     </ng-template>
   </p-table>

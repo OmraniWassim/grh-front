@@ -35,10 +35,13 @@
             ],
             "styles": [
               "src/styles.scss",
-              "src/assets/layout/styles/layout/layout.scss"
+              "src/assets/layout/styles/layout/layout.scss",
+              "node_modules/ngx-toastr/toastr.css"
 
             ],
-            "scripts": []
+            "scripts": [
+
+            ]
           },
           "configurations": {
             "production": {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuItem, MessageService } from 'primeng/api';
+import { ToastrService } from 'ngx-toastr';
+import { MenuItem} from 'primeng/api';
 import { CollaborateurService } from 'src/app/service/collaborateur.service';
 
 
@@ -22,7 +23,7 @@ export class CollaborateurListComponent implements OnInit {
   collabNametoDelete: string="test";
   collabIdTodelete: number=0;
 
-  constructor(private collaborateurService: CollaborateurService, private router: Router,private messageService: MessageService) {}
+  constructor(private collaborateurService: CollaborateurService, private router: Router,private toaster:ToastrService) {}
 
   ngOnInit(): void {
     this.loadCollaborateurs();
@@ -38,8 +39,12 @@ export class CollaborateurListComponent implements OnInit {
 
   confirmDelete() {
     this.deleteProductDialog = false;
+    this.collaborateurService.deleteCollaborateur(this.collabIdTodelete).subscribe(() => {
+      this.toaster.success("success","collaboratuer supprimer");
+      this.loadCollaborateurs();
+
+    });
     console.log('deleted');
-    this.messageService.add({severity:'success', summary:'Service Message', detail:'Via MessageService'});
   }
 
   displayInformation(){

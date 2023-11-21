@@ -22,6 +22,7 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { DialogModule } from 'primeng/dialog';
 import { MessageService } from 'primeng/api';
 import {MessagesModule} from 'primeng/messages';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -50,11 +51,13 @@ import {MessagesModule} from 'primeng/messages';
     RadioButtonModule,
     BreadcrumbModule,
     DialogModule,
-    MessagesModule
+    MessagesModule,
+    ToastrModule.forRoot()
 
 
   ],
-  providers: [MessageService],
+  providers: [MessageService,
+  ], 
   bootstrap: [AppComponent]
 })
 export class AppModule { }

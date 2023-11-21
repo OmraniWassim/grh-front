@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { PiecesJointes } from 'src/app/model/ContractType';
+import { Departement } from 'src/app/model/Departement';
+import { Poste } from 'src/app/model/Poste';
+import { DepartementService } from 'src/app/service/Departement.service';
+import { ResponsableService } from 'src/app/service/Responsable.service';
 
 @Component({
   selector: 'app-add-collaborateur',
@@ -31,11 +35,9 @@ avantages!: any[];
 dateDebutContrat: any;
 selectedAvantage: any;
 selectedContractType: any;
-departements!: any[];
-postes!: any[];
-selectedDepartement: any;
+
 selectedPoste: any;
-responsables!: any[];
+responsables!: string[];
 selectedResponsable: any;
 documents!: PiecesJointes[];
 cin!: number;
@@ -56,8 +58,13 @@ cin!: number;
 collaborateurs!: string;
 comment!: string;
 
+  departements: Departement[] = [];
+  departmentsList:string[]=[];
+  selectedDepartement: String | null = null;
+  postes: any[] = []; 
 
-  constructor() {}
+
+  constructor(private departementService: DepartementService,private responsableService: ResponsableService) {}
 
 
   ngOnInit(): void {
@@ -68,9 +75,54 @@ comment!: string;
       },
       {
         label: 'Nouveau collaborateur', icon: 'pi pi-fw pi-plus'
-     },
+      },
 
-  ];
+     ];
+     this.loadDepartements();
+     this.loadResponsables();
   }
+
+
+  loadDepartements(): void {
+    this.departementService.getAllDepartements().subscribe(
+      (data) => {
+        this.departements=data;
+        this.departmentsList = data.map((departement) => departement.depName);
+        console.log("deps= ",this.departmentsList);
+      },
+      (error) => {
+        console.error('Error fetching departements:', error);
+      }
+    );
+  }
+  loadResponsables(): void {
+    this.responsableService.getAllResponsables().subscribe(
+      (data) => {
+        this.responsables = data.map((responsable) => responsable.resName);
+        console.log("resp= ",this.responsables);
+      },
+      (error) => {
+        console.error('Error fetching departements:', error);
+      }
+    );
+  }
+  onDepartementChange(): void {
+  console.log("changed");
+  if (this.selectedDepartement) {
+    const selectedDep = this.departements.find(dep => dep.depName === this.selectedDepartement);
+    if (selectedDep) {
+      this.postes=selectedDep.postes.map((poste)=>poste.posteName);
+      console.log("postes list=", this.postes);
+
+    } else {
+      console.error("Selected Departement not found.");
+    }
+  } else {
+    this.postes = [];
+  }
+}
+
+  
+  
 
 }

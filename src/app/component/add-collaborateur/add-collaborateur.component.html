@@ -102,19 +102,22 @@
       <div class="p-formgrid grid">
         <div class="field col">
           <label>Département*</label>
-          <p-dropdown id="departement" name="departement" [options]="departements" optionLabel="label" optionValue="value" [(ngModel)]="selectedDepartement"></p-dropdown>
+          <p-dropdown [options]="departmentsList" [(ngModel)]="selectedDepartement" (onChange)="onDepartementChange()" placeholder="choisir departement"></p-dropdown>
         </div>
         <div class="field col">
           <label>Poste*</label>
-          <p-dropdown id="poste" name="poste" [options]="postes" optionLabel="label" optionValue="value" [(ngModel)]="selectedPoste"></p-dropdown>
+          <p-dropdown id="poste" name="poste" [options]="postes" [(ngModel)]="selectedPoste"></p-dropdown>
         </div>
+        
       </div>
       <div class="p-formgrid grid">
         <div class="field col">
           <label>Responsable</label>
-          <p-dropdown id="responsable" name="responsable" [options]="responsables" optionLabel="label" optionValue="value" [(ngModel)]="selectedResponsable"></p-dropdown>
+          <p-dropdown id="responsable" name="responsable" [options]="responsables"  [(ngModel)]="selectedResponsable"></p-dropdown>
         </div>
       </div>
+      
+      
     </div>
   </p-card>
 
