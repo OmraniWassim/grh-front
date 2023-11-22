@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { PiecesJointes } from 'src/app/model/ContractType';
 import { Departement } from 'src/app/model/Departement';
-import { Poste } from 'src/app/model/Poste';
+import { SalaryAdvantage } from 'src/app/model/SalaryAdvantage';
+import { ContractTypeService } from 'src/app/service/ContractType.service';
 import { DepartementService } from 'src/app/service/Departement.service';
+import { PiecesJointesService } from 'src/app/service/PiecesJointes.service';
 import { ResponsableService } from 'src/app/service/Responsable.service';
 
 @Component({
@@ -12,15 +14,14 @@ import { ResponsableService } from 'src/app/service/Responsable.service';
   styleUrls: ['./add-collaborateur.component.css']
 })
 export class AddCollaborateurComponent implements OnInit {
-selectedTypeContrat: any;
+selectedTypeContrat: any="";
 breadcrumbItems: MenuItem[]=[];
+contractTypesList: string[]=[];
+dateDebutContrat: Date;
 onSubmit() {
 throw new Error('Method not implemented.');
 }
-test() {
-console.log("recomm=",this.recommendation);
 
-}
 
 onBasicUpload() {
 throw new Error('Method not implemented.');
@@ -32,14 +33,13 @@ throw new Error('Method not implemented.');
 contractTypes!: any[];
 salaireDeBase: any;
 avantages!: any[];
-dateDebutContrat: any;
 selectedAvantage: any;
 selectedContractType: any;
 
-selectedPoste: any;
+selectedPoste: any="responsable";
 responsables!: string[];
 selectedResponsable: any;
-documents!: PiecesJointes[];
+documents!: any[];
 cin!: number;
   nomComplet!: string ;
   numCompte!: number;
@@ -58,16 +58,27 @@ cin!: number;
 collaborateurs!: string;
 comment!: string;
 
+obligedDocuments:string[]=[] ;
   departements: Departement[] = [];
   departmentsList:string[]=[];
   selectedDepartement: String | null = null;
   postes: any[] = []; 
+  showResponsableDropdown:boolean=true;
 
 
-  constructor(private departementService: DepartementService,private responsableService: ResponsableService) {}
+  constructor(private departementService: DepartementService,private responsableService: ResponsableService,private contractTypeService:ContractTypeService,private piecesService : PiecesJointesService) {
+    this.dateDebutContrat = new Date();
+
+  }
 
 
   ngOnInit(): void {
+    this.documents = [
+      { id: 1, name: 'CIN', obligatoire: 'Yes' },
+      { id: 2, name: 'Passport', obligatoire: 'No' },
+      { id: 3, name: 'Resume', obligatoire: 'Yes' },
+      { id: 4, name: 'Diplome', obligatoire: 'No' }
+    ];
     this.breadcrumbItems = [
 
       {
@@ -80,15 +91,40 @@ comment!: string;
      ];
      this.loadDepartements();
      this.loadResponsables();
+     this.loadContractTypes();
+      this.loadPieces();
   }
+  loadPieces(){
+    this.piecesService.getAllPiecesJointess().subscribe(
+      (data) => {
+        this.documents=data;
+        console.log("pieces jpointes=",this.documents);
+        
+        
+      },
+      (error) => {
+        console.error('Error fetching departements:', error);
+      }
+    );
+  }
+  
 
-
+  loadContractTypes(): void {
+    this.contractTypeService.getAllContractTypes().subscribe(
+      (data) => {
+        this.contractTypes=data;
+        this.contractTypesList = data.map((c) => c.type);
+      },
+      (error) => {
+        console.error('Error fetching departements:', error);
+      }
+    );
+  };
   loadDepartements(): void {
     this.departementService.getAllDepartements().subscribe(
       (data) => {
         this.departements=data;
         this.departmentsList = data.map((departement) => departement.depName);
-        console.log("deps= ",this.departmentsList);
       },
       (error) => {
         console.error('Error fetching departements:', error);
@@ -99,7 +135,6 @@ comment!: string;
     this.responsableService.getAllResponsables().subscribe(
       (data) => {
         this.responsables = data.map((responsable) => responsable.resName);
-        console.log("resp= ",this.responsables);
       },
       (error) => {
         console.error('Error fetching departements:', error);
@@ -112,7 +147,6 @@ comment!: string;
     const selectedDep = this.departements.find(dep => dep.depName === this.selectedDepartement);
     if (selectedDep) {
       this.postes=selectedDep.postes.map((poste)=>poste.posteName);
-      console.log("postes list=", this.postes);
 
     } else {
       console.error("Selected Departement not found.");
@@ -121,6 +155,37 @@ comment!: string;
     this.postes = [];
   }
 }
+ onPosteChange(event: any): void {
+
+  
+  if (this.selectedPoste === 'Responsable') {
+      this.showResponsableDropdown = false;
+
+  } else {
+    this.showResponsableDropdown = true; 
+
+  }
+}
+OnSelectType(){
+  const selectedType = this.contractTypes.find(c => c.type===this.selectedTypeContrat);
+  this.salaireDeBase=selectedType.salaireBase;
+  this.avantages=selectedType.salaryAdvantages.map((s: { advantage: SalaryAdvantage; })=>s.advantage);
+
+  this.contractTypeService.getPiecesJointesByContractType(this.selectedTypeContrat).subscribe(
+    (data) => {
+      this.obligedDocuments=data;
+    },
+    (error) => {
+      console.error('Error fetching pieces jointes:', error);
+    }
+  );
+
+  
+
+
+}
+
+
 
   
   

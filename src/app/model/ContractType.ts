@@ -1,3 +1,4 @@
+import { SalaryAdvantage } from "./SalaryAdvantage";
 import { Collaborateur } from "./collaborateur";
 
 export interface ContractType {
@@ -5,16 +6,18 @@ export interface ContractType {
   type: string;
   piecesJointes: PiecesJointes[];
   collaborateurs: Collaborateur[];
+  salaireBase:number;
+  salaryAdvantages:SalaryAdvantage[];
 
 
 }
 
-  export interface PiecesJointes {
-    id: number;
-    contractTypes: ContractType[];
-    name: string;
-    obligatoire: boolean;
-    statut: boolean;
+  export class PiecesJointes {
+    id!: number;
+    contractTypes!: ContractType[];
+    name!: string;
+    obligatoire: boolean=false;
+    statut!: boolean;
   }
 
 

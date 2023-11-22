@@ -77,7 +77,7 @@
       <div class="p-formgrid grid">
         <div class="field col">
           <label>Type de Contrat*</label>
-          <p-dropdown id="typeContrat" name="typeContrat" [options]="contractTypes" optionLabel="label" optionValue="value" [(ngModel)]="selectedTypeContrat"></p-dropdown>
+          <p-dropdown id="typeContrat" name="typeContrat"  (onChange)="OnSelectType()" [options]="contractTypesList"   [(ngModel)]="selectedTypeContrat" placeholder="choisir un type de contrat"></p-dropdown>
         </div>
         <div class="field col">
           <label>Salaire de Base*</label>
@@ -87,11 +87,17 @@
       <div class="p-formgrid grid">
         <div class="field col">
           <label>Avantage sur Salaire</label>
-          <p-dropdown id="avantageSalaire" name="avantageSalaire" [options]="avantages" optionLabel="label" optionValue="value" [(ngModel)]="selectedAvantage"></p-dropdown>
+          <p-dropdown id="avantageSalaire" name="avantageSalaire" [options]="avantages"  [(ngModel)]="selectedAvantage"></p-dropdown>
         </div>
         <div class="field col">
           <label>Date Début de Contrat</label>
           <p-calendar [showIcon]="true" id="dateDebutContrat" name="dateDebutContrat" [(ngModel)]="dateDebutContrat"></p-calendar>
+        </div>
+      </div>
+      <div *ngIf="selectedTypeContrat === 'CDD'" class="p-formgrid grid">
+        <div class="field col">
+          <label>Date fin de Contrat</label>
+          <p-calendar [showIcon]="true" id="dateDebutContrat" name="dateFinContrat" [(ngModel)]="dateDebutContrat"></p-calendar>
         </div>
       </div>
     </div>
@@ -106,25 +112,23 @@
         </div>
         <div class="field col">
           <label>Poste*</label>
-          <p-dropdown id="poste" name="poste" [options]="postes" [(ngModel)]="selectedPoste"></p-dropdown>
+          <p-dropdown id="poste" name="poste" [options]="postes" (onChange)="onPosteChange($event)" [(ngModel)]="selectedPoste" placeholder="choisir le poste"></p-dropdown>
         </div>
-        
       </div>
       <div class="p-formgrid grid">
-        <div class="field col">
+        <div *ngIf="showResponsableDropdown === true" class="field col">
           <label>Responsable</label>
-          <p-dropdown id="responsable" name="responsable" [options]="responsables"  [(ngModel)]="selectedResponsable"></p-dropdown>
+          <p-dropdown id="responsable" name="responsable" [options]="responsables" [(ngModel)]="selectedResponsable"></p-dropdown>
         </div>
       </div>
-      
-      
     </div>
+    
   </p-card>
 
   <p-card header="Pieces Jointes" class="pieces-card">
     <div class="card p-fluid">
       <p-fileUpload mode="basic" chooseLabel="Choose" name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php" accept="image/*" [maxFileSize]="1000000" (onUpload)="onBasicUpload()"></p-fileUpload>
-      <p-table [value]="pieces">
+      <p-table [value]="documents">
         <ng-template pTemplate="header">
           <tr>
             <th>Documents</th>
@@ -132,16 +136,21 @@
             <th>Status</th>
           </tr>
         </ng-template>
-        <tbody>
-          <tr *ngFor="let document of documents">
+        <ng-template pTemplate="body" let-document>
+          <tr>
             <td>{{ document.name }}</td>
-            <td>{{ document.obligatoire }}</td>
             <td>
-              <p-checkbox></p-checkbox>
+              <ng-container *ngIf="obligedDocuments.includes(document.name)">oui</ng-container>
+              <ng-container *ngIf="!obligedDocuments.includes(document.name)">non</ng-container>
+            </td>
+            <td>
+              <p-checkbox [binary]="true" [disabled]="obligedDocuments.includes(document.name)" ></p-checkbox>
             </td>
           </tr>
-        </tbody>
+        </ng-template>
       </p-table>
+      
+      
     </div>
   </p-card>
 
@@ -165,7 +174,7 @@
   </p-card>
 
   <div class="button-container">
-    <button pButton type="button" label="enregistrer" (click)="test()" class="p-button-success"></button>
+    <button pButton type="button" label="enregistrer" class="p-button-success"></button>
     <button pButton type="button" label="Initialiser" class="p-button-secondary"></button>
   </div>
 </div>

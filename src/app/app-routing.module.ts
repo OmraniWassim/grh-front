@@ -7,7 +7,7 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
 const routes: Routes = [
   { path: '', component:AppLayoutComponent ,
   children: [
-    {path:'',component : AppLayoutComponent},
+    {path:'',component : CollaborateurListComponent},
     { path: 'collaborateurs', component: CollaborateurListComponent},
     { path: 'add-collaborateur', component: AddCollaborateurComponent }
 
