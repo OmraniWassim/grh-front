@@ -3,15 +3,15 @@
   </div>
 <div class="card">
 
-  <div class="additional-info text-right"> <!-- Added the text-right class -->
+  <div class="additional-info text-right"> 
     <span class="p-float-label">
-      <input type="text" placeholder="Masse salariale" pInputText />
+      <input type="text" placeholder="Masse salariale" pInputText disabled="true" />
     </span>
     <span class="p-float-label">
-      <input type="text" placeholder="Salaire Moyen" pInputText />
+      <input type="text" placeholder="Salaire Moyen" pInputText disabled="true"/>
     </span>
     <span class="p-float-label">
-      <input type="text" placeholder="Pyramides des ages" pInputText />
+      <input type="text" placeholder="Pyramides des ages" pInputText disabled="true" />
     </span>
   </div>
   <button pButton pRipple label="Ajouter collaborateur" icon="pi pi-plus" class="p-button-success mr-2" (click)="addNewCollab()"></button>
@@ -39,7 +39,7 @@
           <div class="flex">
               <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="updateCollab(collaborateur.id)"></button>
               <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mr-2" (click)="deleteProduct(collaborateur.id,collaborateur.name)"></button>
-              <button pButton  pRipple icon="pi pi-file-pdf"  class="p-button-rounded p-button-danger" (click)="downloadPDF(collaborateur.id)"></button>
+              <button pButton  pRipple icon="pi pi-file-pdf"  class="p-button-rounded p-button-danger" (click)="downloadPDF(collaborateur.piecesJointe.id)"></button>
 
           </div>
       </td>

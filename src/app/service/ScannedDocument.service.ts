@@ -13,11 +13,21 @@ export class SacannedDocumentService {
   constructor(private http: HttpClient) {}
 
   public uploadPdf(file: File, cin: number): Observable<string> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/pdf' });
     const formData: FormData = new FormData();
     formData.append('pdf', file);
     formData.append('cin', cin.toString());
 
     return this.http.post<string>(`${this.apiUrl}/add`, formData);
   }
+  downloadPdf(fileId: number): Observable<Blob> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/pdf' });
+  
+    return this.http.get(`${this.apiUrl}/get/${fileId}`, {
+      headers: headers,
+      responseType: 'blob' 
+    });
+  }
+  
 
 }

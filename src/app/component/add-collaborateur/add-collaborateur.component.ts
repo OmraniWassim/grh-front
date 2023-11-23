@@ -16,6 +16,7 @@ import { SalaryAdvantageService } from 'src/app/service/SalaryAdvantage.service'
 import { CollaborateurService } from 'src/app/service/collaborateur.service';
 import { ToastrService } from 'ngx-toastr';
 import { SacannedDocumentService } from 'src/app/service/ScannedDocument.service';
+import { Responsable } from 'src/app/model/Responsable';
 
 
 @Component({
@@ -30,9 +31,13 @@ contractTypesList: string[]=[];
 dateDebutContrat: Date;
   etudeLevelList: EtudeLevel[] | undefined;
   natureEtudeList!: EtudeNature[];
-  responsablesList!: import("c:/Users/wassim/grh-front/src/app/model/Responsable").Responsable[] ;
+  responsablesList!: Responsable[] ;
   postesList: Poste[] | undefined;
   avantagesList: SalaryAdvantage[] | undefined;
+  uploadedFiles: any;
+  collaborateursList!: string[];
+  selectedCollabName!:string;
+  collaborateursListFinal!: string[];
 onSubmit() {
 throw new Error('Method not implemented.');
 }
@@ -68,9 +73,8 @@ cin!: number;
   certifications!:any;
   anneeExperience!:any;
   recommendation: boolean=false; // Default to 'no'
-collaborateurs!: string;
+collaborateurs!: Collaborateur[];
 comment!: string;
-
 obligedDocuments:string[]=[] ;
   departements: Departement[] = [];
   departmentsList:string[]=[];
@@ -87,6 +91,8 @@ obligedDocuments:string[]=[] ;
 
 
   ngOnInit(): void {
+    
+  
     this.avantageService.getAllSalaryAdvantages().subscribe(
       (data) => {
         this.avantagesList=data;
@@ -108,6 +114,7 @@ obligedDocuments:string[]=[] ;
      this.loadContractTypes();
      this.loadPieces();
      this.loadEtudes();
+     this.loadCollabs();
   }
   loadPieces(){
     this.piecesService.getAllPiecesJointess().subscribe(
@@ -223,7 +230,8 @@ OnSelectType(){
   );
 }
 addCollaborator(x:NgForm) {
-    console.log("submitted",x.value);
+  if(this.uploadedFiles)
+   { console.log("submitted",x.value);
     const etudeNatureId = this.natureEtudeList.find(o => o.nature === this.selectedNatureEtude)?.id;
     console.log('etudeNatureId:', etudeNatureId);
 
@@ -259,7 +267,7 @@ addCollaborator(x:NgForm) {
       anneeExperience: x.value.anneeExperience,
       dateDebutContrat: new Date(x.value.dateDebutContrat),
       dateFinContrat: new Date(x.value.dateFinContrat),
-      recommandation: x.value.group1=false,
+      recommandation:this.recommendation,
       collaborateurRecommande: x.value.collaborateurRecommande,
       commentaire: x.value.commentaire,
     };
@@ -276,35 +284,42 @@ addCollaborator(x:NgForm) {
     ).subscribe(data => {
       console.log("data at the end :",data);
       this.toaster.success("collab ajouter avec succes")
+      this.uploadedFiles.forEach((file: File) => {
+        this.sannedDocumentService.uploadPdf(file, x.value.cin).subscribe(
+          
+        );
+      });
 
     },(error)=>{
       console.log("error happened here ");
       this.toaster.error("error happened")
 
-    });
+    });}
+    else{
+      this.toaster.info("svp uploader le document :)")
+    }
 
 
 
 
 }
 onBasicUpload(event:any) {
-  const uploadedFiles = event.files;
+   this.uploadedFiles = event.files;
 
-    // Assuming you have access to the selected collaborateur's cin
-    const cin = 99999999;
+}
+loadCollabs(){
+  this.collaborateurService.getAllCollaborateurs().subscribe(data=>{
+    this.collaborateurs=data;
+    this.collaborateursList=data.map(c=>c.nomComplet);
 
-    // Upload each file
-    uploadedFiles.forEach((file: File) => {
-      this.sannedDocumentService.uploadPdf(file, cin).subscribe(
-        (response) => {
-          this.toaster.success(response, 'File Upload');
-        },
-        (error) => {
-          this.toaster.error('File upload failed.', 'Error');
-        }
-      );
-    });
+  })
+}
 
+search(event: any) {
+  const query = event.query.toLowerCase();
+  this.collaborateursListFinal = this.collaborateursList.filter((collaborateur) =>
+    collaborateur.toLowerCase().includes(query)
+  );
 }
 
 

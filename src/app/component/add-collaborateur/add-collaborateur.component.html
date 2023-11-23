@@ -8,7 +8,19 @@
       <div class="p-formgrid grid">
         <div class="field col">
           <label for="cin">CIN*</label>
-          <input pInputText id="cin" name="cin" type="number" [(ngModel)]="cin" required/>
+          <input
+            pInputText
+            id="cin"
+            name="cin"
+            type="number"
+            [(ngModel)]="cin"
+            required
+            pattern="\d{8}"
+          />
+          <div *ngIf="addForm.controls['cin'].invalid && (addForm.controls['cin'].dirty || addForm.controls['cin'].touched)">
+            <small class="text-danger" *ngIf="addForm.controls['cin'].errors?.required">CIN is required.</small>
+            <small class="text-danger" *ngIf="addForm.controls['cin'].errors?.pattern">CIN must be 8 digits.</small>
+          </div>
         </div>
         <div class="field col">
           <label for="nomComplet">Nom Complet*</label>
@@ -18,17 +30,34 @@
       <div class="p-formgrid grid">
         <div class="field col">
           <label for="numCompte">Num Compte*</label>
-          <input pInputText id="numCompte" name="numCompte" type="number" [(ngModel)]="numCompte" required />
+          <input
+            pInputText
+            id="numCompte"
+            name="numCompte"
+            type="number"
+            [(ngModel)]="numCompte"
+            required
+            pattern="\d{13}"
+          />
+          <div *ngIf="addForm.controls['numCompte'].invalid && (addForm.controls['numCompte'].dirty || addForm.controls['numCompte'].touched)">
+            <small class="text-danger" *ngIf="addForm.controls['numCompte'].errors?.required">Num Compte is required.</small>
+            <small class="text-danger" *ngIf="addForm.controls['numCompte'].errors?.pattern">Num Compte must be 13 digits.</small>
+          </div>
+        
         </div>
         <div class="field col">
           <label for="numSecuriteSociale">Num Securite Sociale</label>
-          <input pInputText id="numSecuriteSociale" name="numSecuriteSociale" type="number" [(ngModel)]="numSecuriteSociale" />
+          <input pInputText id="numSecuriteSociale" name="numSecuriteSociale" type="number" [(ngModel)]="numSecuriteSociale"  pattern="\d{15}" />
+          <div *ngIf="addForm.controls['numSecuriteSociale'].invalid && (addForm.controls['numSecuriteSociale'].dirty || addForm.controls['numSecuriteSociale'].touched)">
+            <small class="text-danger" *ngIf="addForm.controls['numSecuriteSociale'].errors?.pattern">Num securite sociale must be 15 digits.</small>
+          </div>
         </div>
+       
       </div>
       <div class="p-formgrid grid">
         <div class="field col">
           <label for="dateNaissance">Date Naissance*</label>
-          <p-calendar  [showIcon]="true" inputId="dateNaissance" name="dateNaissance" [required]="true" [(ngModel)]="dateNaissance" ></p-calendar>
+          <p-calendar  [showIcon]="true" inputId="dateNaissance" name="dateNaissance" [required]="true" [(ngModel)]="dateNaissance" dateFormat="dd/mm/yy"></p-calendar>
         </div>
         <div class="field col">
           <label for="numTelephone">Num Telephone*</label>
@@ -42,7 +71,11 @@
         </div>
         <div class="field col">
           <label for="email">Email</label>
-          <input pInputText id="email" name="email" type="email" [(ngModel)]="email" />
+          <input pInputText id="email" name="email" type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" [(ngModel)]="email"  mail/>
+          <div *ngIf="addForm.controls['email'].invalid && (addForm.controls['email'].dirty || addForm.controls['email'].touched)">
+            <small class="text-danger" *ngIf="addForm.controls['email'].errors?.required">maile is required.</small>
+            <small class="text-danger" *ngIf="addForm.controls['email'].errors?.pattern">mail is not valid.</small>
+          </div>
         </div>
       </div>
     </div>
@@ -78,7 +111,7 @@
       <div class="p-formgrid grid">
         <div class="field col">
           <label>Type de Contrat*</label>
-          <p-dropdown id="typeContrat" name="typeContrat"  (onChange)="OnSelectType()" [options]="contractTypesList" [required]="true"  [(ngModel)]="selectedTypeContrat" placeholder="choisir un type de contrat"></p-dropdown>
+          <p-dropdown id="typeContrat" name="typeContrat"  (onChange)="OnSelectType()" [options]="contractTypesList"   [(ngModel)]="selectedTypeContrat" placeholder="choisir un type de contrat"></p-dropdown>
         </div>
         <div class="field col">
           <label>Salaire de Base*</label>
@@ -134,7 +167,7 @@
       name="demo[]"
       url="https://www.primefaces.org/cdn/api/upload.php"
       accept=".pdf"
-      [maxFileSize]="1000000"
+      [maxFileSize]="4 * 1024 * 1024"
       (onUpload)="onBasicUpload($event)"
     ></p-fileUpload>      <p-table [value]="documents">
         <ng-template pTemplate="header">
@@ -170,8 +203,9 @@
           <label for="recommendation" class="ml-2">Recommendation</label>
         </div>
         <div *ngIf="recommendation != false" class="col-12 md:col-6">
-          <label>Collaborateurs</label>
-          <input pInputText id="collaborateurs" name="collaborateurs" type="text" [(ngModel)]="collaborateurs" />
+          <label>Collaborateur</label>
+          <p-autoComplete id="collaborateurs" name="collaborateurs" type="text" [(ngModel)]="selectedCollabName" [suggestions]="collaborateursListFinal" (completeMethod)="search($event)" ></p-autoComplete>          
+
         </div>
         <div *ngIf="recommendation != false" class="col-12 md:col-4">
           <label class="block text-sm font-medium text-gray-700">Comment</label>
@@ -183,7 +217,7 @@
   <p></p>
   <div class="modal-footer d-flex justify-content-end">
     <button  pButton pRipple label="Initialiser" icon="pi pi-times" class="p-button-text"></button>
-    <button [disabled]="addForm.invalid" (click)="addCollaborator(addForm)" pButton pRipple label="Enregistre" icon="pi pi-check" class="p-button-text"></button>
+    <button  (click)="addCollaborator(addForm)" pButton pRipple label="Enregistre" icon="pi pi-check" class="p-button-text"></button>
   </div>
 
 

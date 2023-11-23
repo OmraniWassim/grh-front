@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { MenuItem} from 'primeng/api';
+import { SacannedDocumentService } from 'src/app/service/ScannedDocument.service';
 import { CollaborateurService } from 'src/app/service/collaborateur.service';
 
 
@@ -23,7 +24,7 @@ export class CollaborateurListComponent implements OnInit {
   collabNametoDelete: string="test";
   collabIdTodelete: number=0;
 
-  constructor(private collaborateurService: CollaborateurService, private router: Router,private toaster:ToastrService) {}
+  constructor(private sannedDocumentService:SacannedDocumentService,private collaborateurService: CollaborateurService, private router: Router,private toaster:ToastrService) {}
 
   ngOnInit(): void {
     this.loadCollaborateurs();
@@ -79,7 +80,20 @@ export class CollaborateurListComponent implements OnInit {
 
   }
 
-  downloadPDF(collabId: number) {
-
+  downloadPDF(id: number): void {
+    this.sannedDocumentService.downloadPdf(id).subscribe(
+      (data: Blob) => {
+        const blob = new Blob([data], { type: 'application/pdf' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = `document_${id}.pdf`;
+        link.click();
+      },
+      (error) => {
+        console.error('Error downloading PDF:', error);
+      }
+    );
   }
+  
+  
 }

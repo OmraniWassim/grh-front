@@ -23,6 +23,7 @@ import { DialogModule } from 'primeng/dialog';
 import { MessageService } from 'primeng/api';
 import {MessagesModule} from 'primeng/messages';
 import { ToastrModule } from 'ngx-toastr';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { ToastrModule } from 'ngx-toastr';
     DialogModule,
     MessagesModule,
     ToastrModule.forRoot(),
+    AutoCompleteModule
 
 
 
