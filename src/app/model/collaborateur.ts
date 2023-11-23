@@ -7,7 +7,7 @@ import { Responsable } from "./Responsable";
 import { SalaryAdvantage } from "./SalaryAdvantage";
 
 export interface Collaborateur {
-  id: number;
+  id?: number;
   cin: number;
   nomComplet: string;
   numCompte: number;
@@ -19,16 +19,17 @@ export interface Collaborateur {
   certifications: string;
   anneeExperience: number;
   dateDebutContrat: Date;
+  dateFinContrat: Date;
   recommandation: boolean;
   collaborateurRecommande: string;
   commentaire: string;
-  piecesJointe: ScannedDocument;
-  etudeNature: EtudeNature;
-  etudeLevel: EtudeLevel;
-  contractType: ContractType;
-  salaryAdvantage: SalaryAdvantage;
-  poste: Poste;
-  responsable: Responsable;
+  piecesJointe?: ScannedDocument;
+  etudeNature?: EtudeNature;
+  etudeLevel?: EtudeLevel;
+  contractType?: ContractType;
+  salaryAdvantage?: SalaryAdvantage;
+  poste?: Poste;
+  responsable?: Responsable;
 }
 
 export interface ScannedDocument {

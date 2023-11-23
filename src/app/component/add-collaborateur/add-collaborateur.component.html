@@ -1,23 +1,24 @@
 <div class="card card-w-title">
   <p-breadcrumb [model]="breadcrumbItems" [home]="{icon: 'pi pi-home'}"></p-breadcrumb>
 </div>
-<div class="card">
+<ng-form #addForm="ngForm" >
+  <div class="card">
   <p-card header="Informations Collaborateur">
     <div class="card p-fluid">
       <div class="p-formgrid grid">
         <div class="field col">
           <label for="cin">CIN*</label>
-          <input pInputText id="cin" name="cin" type="number" [(ngModel)]="cin" />
+          <input pInputText id="cin" name="cin" type="number" [(ngModel)]="cin" required/>
         </div>
         <div class="field col">
           <label for="nomComplet">Nom Complet*</label>
-          <input pInputText id="nomComplet" name="nomComplet" type="text" [(ngModel)]="nomComplet" />
+          <input pInputText id="nomComplet" name="nomComplet" type="text" [(ngModel)]="nomComplet" required/>
         </div>
       </div>
       <div class="p-formgrid grid">
         <div class="field col">
           <label for="numCompte">Num Compte*</label>
-          <input pInputText id="numCompte" name="numCompte" type="number" [(ngModel)]="numCompte" />
+          <input pInputText id="numCompte" name="numCompte" type="number" [(ngModel)]="numCompte" required />
         </div>
         <div class="field col">
           <label for="numSecuriteSociale">Num Securite Sociale</label>
@@ -27,11 +28,11 @@
       <div class="p-formgrid grid">
         <div class="field col">
           <label for="dateNaissance">Date Naissance*</label>
-          <p-calendar [showIcon]="true" inputId="dateNaissance" name="dateNaissance" [(ngModel)]="dateNaissance"></p-calendar>
+          <p-calendar  [showIcon]="true" inputId="dateNaissance" name="dateNaissance" [required]="true" [(ngModel)]="dateNaissance" ></p-calendar>
         </div>
         <div class="field col">
           <label for="numTelephone">Num Telephone*</label>
-          <input pInputText id="numTelephone" name="numTelephone" type="number" [(ngModel)]="numTelephone" />
+          <input pInputText id="numTelephone" name="numTelephone" type="number" [(ngModel)]="numTelephone" required/>
         </div>
       </div>
       <div class="p-formgrid grid">
@@ -52,7 +53,7 @@
       <div class="p-formgrid grid">
         <div class="field col">
           <label for="natureEtude">Nature d'Etude*</label>
-          <p-dropdown id="natureEtude" name="natureEtude" [options]="natureEtudeOptions" [(ngModel)]="selectedNatureEtude" optionLabel="label" optionValue="value"></p-dropdown>
+          <p-dropdown id="natureEtude" name="natureEtude"  [options]="natureEtudeOptions" [(ngModel)]="selectedNatureEtude" [required]="true"></p-dropdown>
         </div>
         <div class="field col">
           <label for="certifications">Certifications</label>
@@ -62,11 +63,11 @@
       <div class="p-formgrid grid">
         <div class="field col">
           <label for="niveauEtude">Niveau d'Etude*</label>
-          <p-dropdown id="niveauEtude" name="niveauEtude" [options]="niveauEtudeOptions" [(ngModel)]="selectedNiveauEtude" optionLabel="label" optionValue="value"></p-dropdown>
+          <p-dropdown id="niveauEtude" name="niveauEtude" [options]="niveauEtudeOptions" [(ngModel)]="selectedNiveauEtude" [required]="true" ></p-dropdown>
         </div>
         <div class="field col">
           <label for="anneeExperience">Annee d'Experience*</label>
-          <input pInputText id="anneeExperience" name="anneeExperience" type="text" [(ngModel)]="anneeExperience" />
+          <input pInputText id="anneeExperience" name="anneeExperience" type="text" [(ngModel)]="anneeExperience" [required]="true" />
         </div>
       </div>
     </div>
@@ -77,11 +78,11 @@
       <div class="p-formgrid grid">
         <div class="field col">
           <label>Type de Contrat*</label>
-          <p-dropdown id="typeContrat" name="typeContrat"  (onChange)="OnSelectType()" [options]="contractTypesList"   [(ngModel)]="selectedTypeContrat" placeholder="choisir un type de contrat"></p-dropdown>
+          <p-dropdown id="typeContrat" name="typeContrat"  (onChange)="OnSelectType()" [options]="contractTypesList" [required]="true"  [(ngModel)]="selectedTypeContrat" placeholder="choisir un type de contrat"></p-dropdown>
         </div>
         <div class="field col">
           <label>Salaire de Base*</label>
-          <input pInputText id="salaireDeBase" name="salaireDeBase" type="text" [(ngModel)]="salaireDeBase" />
+          <input pInputText id="salaireDeBase" name="salaireDeBase" [required]="true" type="text" [(ngModel)]="salaireDeBase" />
         </div>
       </div>
       <div class="p-formgrid grid">
@@ -107,8 +108,8 @@
     <div class="card p-fluid">
       <div class="p-formgrid grid">
         <div class="field col">
-          <label>Département*</label>
-          <p-dropdown [options]="departmentsList" [(ngModel)]="selectedDepartement" (onChange)="onDepartementChange()" placeholder="choisir departement"></p-dropdown>
+          <label>Dpartement*</label>
+          <p-dropdown [options]="departmentsList" (onChange)="onDepartementChange($event.value)" placeholder="choisir departement"  [(ngModel)]="selectedDepartement"></p-dropdown>
         </div>
         <div class="field col">
           <label>Poste*</label>
@@ -122,13 +123,20 @@
         </div>
       </div>
     </div>
-    
+
   </p-card>
 
   <p-card header="Pieces Jointes" class="pieces-card">
     <div class="card p-fluid">
-      <p-fileUpload mode="basic" chooseLabel="Choose" name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php" accept="image/*" [maxFileSize]="1000000" (onUpload)="onBasicUpload()"></p-fileUpload>
-      <p-table [value]="documents">
+      <p-fileUpload
+      mode="basic"
+      chooseLabel="Choose"
+      name="demo[]"
+      url="https://www.primefaces.org/cdn/api/upload.php"
+      accept=".pdf"
+      [maxFileSize]="1000000"
+      (onUpload)="onBasicUpload($event)"
+    ></p-fileUpload>      <p-table [value]="documents">
         <ng-template pTemplate="header">
           <tr>
             <th>Documents</th>
@@ -149,8 +157,8 @@
           </tr>
         </ng-template>
       </p-table>
-      
-      
+
+
     </div>
   </p-card>
 
@@ -172,9 +180,13 @@
       </div>
     </div>
   </p-card>
-
-  <div class="button-container">
-    <button pButton type="button" label="enregistrer" class="p-button-success"></button>
-    <button pButton type="button" label="Initialiser" class="p-button-secondary"></button>
+  <p></p>
+  <div class="modal-footer d-flex justify-content-end">
+    <button  pButton pRipple label="Initialiser" icon="pi pi-times" class="p-button-text"></button>
+    <button [disabled]="addForm.invalid" (click)="addCollaborator(addForm)" pButton pRipple label="Enregistre" icon="pi pi-check" class="p-button-text"></button>
   </div>
+
+
 </div>
+</ng-form>
+

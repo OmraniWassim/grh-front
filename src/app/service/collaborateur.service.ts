@@ -19,8 +19,17 @@ export class CollaborateurService {
     return this.http.get<Collaborateur>(`${this.apiUrl}/${id}`);
   }
 
-  createCollaborateur(collaborateur: Collaborateur): Observable<Collaborateur> {
-    return this.http.post<Collaborateur>(`${this.apiUrl}/add`, collaborateur);
+  createCollaborateur(
+    etudeNatureId?: number,
+    etudeLevelId?: number,
+    contractTypeId?: number,
+    salaryAdvantageId?: number,
+    posteId?: number,
+    responsableId?: number,
+    collaborateur?: Collaborateur
+  ): Observable<Collaborateur> {
+    const url = `${this.apiUrl}/add/${etudeNatureId}/${etudeLevelId}/${contractTypeId}/${salaryAdvantageId}/${posteId}/${responsableId}`;
+    return this.http.post<Collaborateur>(url, collaborateur);
   }
 
   updateCollaborateur(id: number, updatedCollaborateur: Collaborateur): Observable<Collaborateur> {

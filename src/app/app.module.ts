@@ -52,12 +52,13 @@ import { ToastrModule } from 'ngx-toastr';
     BreadcrumbModule,
     DialogModule,
     MessagesModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+
 
 
   ],
   providers: [MessageService,
-  ], 
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

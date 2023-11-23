@@ -1,31 +1,44 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { MenuItem } from 'primeng/api';
-import { PiecesJointes } from 'src/app/model/ContractType';
 import { Departement } from 'src/app/model/Departement';
+import { EtudeLevel } from 'src/app/model/EtudeLevel';
+import { EtudeNature } from 'src/app/model/EtudeNature';
+import { Poste } from 'src/app/model/Poste';
 import { SalaryAdvantage } from 'src/app/model/SalaryAdvantage';
+import { Collaborateur } from 'src/app/model/collaborateur';
 import { ContractTypeService } from 'src/app/service/ContractType.service';
 import { DepartementService } from 'src/app/service/Departement.service';
+import { EtudeService } from 'src/app/service/Etude.service';
 import { PiecesJointesService } from 'src/app/service/PiecesJointes.service';
 import { ResponsableService } from 'src/app/service/Responsable.service';
+import { SalaryAdvantageService } from 'src/app/service/SalaryAdvantage.service';
+import { CollaborateurService } from 'src/app/service/collaborateur.service';
+import { ToastrService } from 'ngx-toastr';
+import { SacannedDocumentService } from 'src/app/service/ScannedDocument.service';
+
 
 @Component({
   selector: 'app-add-collaborateur',
   templateUrl: './add-collaborateur.component.html',
-  styleUrls: ['./add-collaborateur.component.css']
+  styleUrls: ['./add-collaborateur.component.scss']
 })
 export class AddCollaborateurComponent implements OnInit {
 selectedTypeContrat: any="";
 breadcrumbItems: MenuItem[]=[];
 contractTypesList: string[]=[];
 dateDebutContrat: Date;
+  etudeLevelList: EtudeLevel[] | undefined;
+  natureEtudeList!: EtudeNature[];
+  responsablesList!: import("c:/Users/wassim/grh-front/src/app/model/Responsable").Responsable[] ;
+  postesList: Poste[] | undefined;
+  avantagesList: SalaryAdvantage[] | undefined;
 onSubmit() {
 throw new Error('Method not implemented.');
 }
 
 
-onBasicUpload() {
-throw new Error('Method not implemented.');
-}
+
 pieces!: any[];
 uploadDocuments() {
 throw new Error('Method not implemented.');
@@ -49,7 +62,7 @@ cin!: number;
   adresse!: string;
   email!: string;
   natureEtudeOptions! :any[];
-  niveauEtudeOptions! :any[];
+  niveauEtudeOptions! :string[];
   selectedNatureEtude!:any;
   selectedNiveauEtude!:any;
   certifications!:any;
@@ -61,24 +74,25 @@ comment!: string;
 obligedDocuments:string[]=[] ;
   departements: Departement[] = [];
   departmentsList:string[]=[];
-  selectedDepartement: String | null = null;
-  postes: any[] = []; 
+  selectedDepartement: any;
+  postes: any[] = [];
   showResponsableDropdown:boolean=true;
 
 
-  constructor(private departementService: DepartementService,private responsableService: ResponsableService,private contractTypeService:ContractTypeService,private piecesService : PiecesJointesService) {
+  constructor(private sannedDocumentService:SacannedDocumentService,private collaborateurService:CollaborateurService, private avantageService:SalaryAdvantageService,private departementService: DepartementService,private responsableService: ResponsableService,
+    private contractTypeService:ContractTypeService,private piecesService : PiecesJointesService,private etudeService: EtudeService,private toaster:ToastrService ) {
     this.dateDebutContrat = new Date();
 
   }
 
 
   ngOnInit(): void {
-    this.documents = [
-      { id: 1, name: 'CIN', obligatoire: 'Yes' },
-      { id: 2, name: 'Passport', obligatoire: 'No' },
-      { id: 3, name: 'Resume', obligatoire: 'Yes' },
-      { id: 4, name: 'Diplome', obligatoire: 'No' }
-    ];
+    this.avantageService.getAllSalaryAdvantages().subscribe(
+      (data) => {
+        this.avantagesList=data;
+      }
+    );
+
     this.breadcrumbItems = [
 
       {
@@ -92,22 +106,45 @@ obligedDocuments:string[]=[] ;
      this.loadDepartements();
      this.loadResponsables();
      this.loadContractTypes();
-      this.loadPieces();
+     this.loadPieces();
+     this.loadEtudes();
   }
   loadPieces(){
     this.piecesService.getAllPiecesJointess().subscribe(
       (data) => {
         this.documents=data;
-        console.log("pieces jpointes=",this.documents);
-        
-        
       },
       (error) => {
         console.error('Error fetching departements:', error);
       }
     );
   }
-  
+  loadEtudes(){
+    this.etudeService.getAllEtudeLevels().subscribe(
+      (data) => {
+        this.etudeLevelList=data;
+        this.niveauEtudeOptions = data.map((c) => c.niveaux);
+        console.log(this.niveauEtudeOptions);
+
+      },
+      (error) => {
+        console.error('Error fetching etudes levels:', error);
+      }
+    );
+    this.etudeService.getAllEtudeNatures().subscribe(
+      (data) => {
+        console.log(data);
+        this.natureEtudeOptions = data.map((c) => c.nature);
+        this.natureEtudeList=data;
+
+      },
+      (error) => {
+        console.error('Error fetching etude natures:', error);
+      }
+    );
+
+  }
+
 
   loadContractTypes(): void {
     this.contractTypeService.getAllContractTypes().subscribe(
@@ -134,6 +171,7 @@ obligedDocuments:string[]=[] ;
   loadResponsables(): void {
     this.responsableService.getAllResponsables().subscribe(
       (data) => {
+        this.responsablesList=data;
         this.responsables = data.map((responsable) => responsable.resName);
       },
       (error) => {
@@ -141,28 +179,32 @@ obligedDocuments:string[]=[] ;
       }
     );
   }
-  onDepartementChange(): void {
-  console.log("changed");
-  if (this.selectedDepartement) {
-    const selectedDep = this.departements.find(dep => dep.depName === this.selectedDepartement);
-    if (selectedDep) {
-      this.postes=selectedDep.postes.map((poste)=>poste.posteName);
+  onDepartementChange(selectedValue:any): void {
+    this.selectedDepartement=selectedValue;
+    if (this.selectedDepartement) {
+      console.log("entered");
 
+      const selectedDep = this.departements.find(dep => dep.depName === this.selectedDepartement);
+      if (selectedDep) {
+        console.log("eneteed here ");
+        this.postesList=selectedDep.postes;
+        this.postes=selectedDep.postes.map((poste)=>poste.posteName);
+
+      } else {
+        console.error("Selected Departement not found.");
+      }
     } else {
-      console.error("Selected Departement not found.");
+      this.postes = [];
     }
-  } else {
-    this.postes = [];
   }
-}
  onPosteChange(event: any): void {
 
-  
+
   if (this.selectedPoste === 'Responsable') {
       this.showResponsableDropdown = false;
 
   } else {
-    this.showResponsableDropdown = true; 
+    this.showResponsableDropdown = true;
 
   }
 }
@@ -179,15 +221,96 @@ OnSelectType(){
       console.error('Error fetching pieces jointes:', error);
     }
   );
+}
+addCollaborator(x:NgForm) {
+    console.log("submitted",x.value);
+    const etudeNatureId = this.natureEtudeList.find(o => o.nature === this.selectedNatureEtude)?.id;
+    console.log('etudeNatureId:', etudeNatureId);
 
-  
+    const etudeLevelId = this.etudeLevelList?.find(o => o.niveaux === this.selectedNiveauEtude)?.id;
+    console.log('etudeLevelId:', etudeLevelId);
 
+    const contractTypeId = this.contractTypes.find(o => o.type === x.value.typeContrat)?.id;
+    console.log('loiste des avanatges:', this.avantagesList);
+    console.log("x.value.avantageSalaire",x.value.avantageSalaire);
+
+    const salaryAdvantageId = this.avantagesList?.find( o=>o.advantage === x.value.avantageSalaire)?.id;
+    console.log('salaryAdvantageId:', salaryAdvantageId);
+
+    const posteId = this.postesList?.find(o => o.posteName === x.value.poste)?.id;
+    console.log('posteId:', posteId);
+
+    const responsableId = this.responsablesList?.find(o => o.resName === this.selectedResponsable)?.id;
+    console.log('responsableId:', responsableId);
+
+    const departementId=this.departements.find(o=>o.depName===this.selectedDepartement)?.id;
+    console.log("depId= ",departementId);
+
+    const requestPayload: Collaborateur = {
+      cin: x.value.cin,
+      nomComplet: x.value.nomComplet,
+      numCompte: x.value.numCompte,
+      numSecuriteSociale: x.value.numSecuriteSociale,
+      numTelephone: x.value.numTelephone,
+      dateNaissance: new Date(x.value.dateNaissance),
+      adresse: x.value.adresse,
+      email: x.value.email,
+      certifications: x.value.certifications,
+      anneeExperience: x.value.anneeExperience,
+      dateDebutContrat: new Date(x.value.dateDebutContrat),
+      dateFinContrat: new Date(x.value.dateFinContrat),
+      recommandation: x.value.group1=false,
+      collaborateurRecommande: x.value.collaborateurRecommande,
+      commentaire: x.value.commentaire,
+    };
+    console.log("req playload= ",requestPayload );
+
+    this.collaborateurService.createCollaborateur(
+      etudeNatureId,
+      etudeLevelId,
+      contractTypeId,
+      salaryAdvantageId,
+      posteId,
+      responsableId,
+      requestPayload
+    ).subscribe(data => {
+      console.log("data at the end :",data);
+      this.toaster.success("collab ajouter avec succes")
+
+    },(error)=>{
+      console.log("error happened here ");
+      this.toaster.error("error happened")
+
+    });
+
+
+
+
+}
+onBasicUpload(event:any) {
+  const uploadedFiles = event.files;
+
+    // Assuming you have access to the selected collaborateur's cin
+    const cin = 99999999;
+
+    // Upload each file
+    uploadedFiles.forEach((file: File) => {
+      this.sannedDocumentService.uploadPdf(file, cin).subscribe(
+        (response) => {
+          this.toaster.success(response, 'File Upload');
+        },
+        (error) => {
+          this.toaster.error('File upload failed.', 'Error');
+        }
+      );
+    });
 
 }
 
 
 
-  
-  
+
+
+
 
 }
