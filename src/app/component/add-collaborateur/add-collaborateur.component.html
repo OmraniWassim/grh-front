@@ -43,7 +43,7 @@
             <small class="text-danger" *ngIf="addForm.controls['numCompte'].errors?.required">Num Compte is required.</small>
             <small class="text-danger" *ngIf="addForm.controls['numCompte'].errors?.pattern">Num Compte must be 13 digits.</small>
           </div>
-        
+
         </div>
         <div class="field col">
           <label for="numSecuriteSociale">Num Securite Sociale</label>
@@ -52,7 +52,7 @@
             <small class="text-danger" *ngIf="addForm.controls['numSecuriteSociale'].errors?.pattern">Num securite sociale must be 15 digits.</small>
           </div>
         </div>
-       
+
       </div>
       <div class="p-formgrid grid">
         <div class="field col">
@@ -131,7 +131,7 @@
       <div *ngIf="selectedTypeContrat === 'CDD'" class="p-formgrid grid">
         <div class="field col">
           <label>Date fin de Contrat</label>
-          <p-calendar [showIcon]="true" id="dateDebutContrat" name="dateFinContrat" [(ngModel)]="dateDebutContrat"></p-calendar>
+          <p-calendar [showIcon]="true" id="dateDebutContrat" name="dateFinContrat" [(ngModel)]="dateFintContrat"></p-calendar>
         </div>
       </div>
     </div>
@@ -204,7 +204,7 @@
         </div>
         <div *ngIf="recommendation != false" class="col-12 md:col-6">
           <label>Collaborateur</label>
-          <p-autoComplete id="collaborateurs" name="collaborateurs" type="text" [(ngModel)]="selectedCollabName" [suggestions]="collaborateursListFinal" (completeMethod)="search($event)" ></p-autoComplete>          
+          <p-autoComplete id="collaborateurs" name="collaborateurs" type="text" [(ngModel)]="selectedCollabName" [suggestions]="collaborateursListFinal" (completeMethod)="search($event)" ></p-autoComplete>
 
         </div>
         <div *ngIf="recommendation != false" class="col-12 md:col-4">
@@ -215,12 +215,13 @@
     </div>
   </p-card>
   <p></p>
-  <div class="modal-footer d-flex justify-content-end">
-    <button  pButton pRipple label="Initialiser" icon="pi pi-times" class="p-button-text"></button>
-    <button  (click)="addCollaborator(addForm)" pButton pRipple label="Enregistre" icon="pi pi-check" class="p-button-text"></button>
+  <div class="modal-footer d-flex text-right">
+    <button  pButton pRipple label="Initialiser" (click)="resetForm(addForm)" icon="pi pi-times" class="p-button-text"></button>
+    <button [disabled]="addForm.invalid" (click)="addCollaborator(addForm)" pButton pRipple label="Enregistre" icon="pi pi-check" class="p-button-text"></button>
   </div>
 
 
 </div>
 </ng-form>
 
+<p-toast></p-toast>

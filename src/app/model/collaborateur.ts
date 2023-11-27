@@ -20,6 +20,7 @@ export interface Collaborateur {
   anneeExperience: number;
   dateDebutContrat: Date;
   dateFinContrat: Date;
+  salaireDeBase:number;
   recommandation: boolean;
   collaborateurRecommande: string;
   commentaire: string;

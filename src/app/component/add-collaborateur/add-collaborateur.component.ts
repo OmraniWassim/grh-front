@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { Departement } from 'src/app/model/Departement';
 import { EtudeLevel } from 'src/app/model/EtudeLevel';
 import { EtudeNature } from 'src/app/model/EtudeNature';
@@ -25,10 +25,10 @@ import { Responsable } from 'src/app/model/Responsable';
   styleUrls: ['./add-collaborateur.component.scss']
 })
 export class AddCollaborateurComponent implements OnInit {
-selectedTypeContrat: any="";
-breadcrumbItems: MenuItem[]=[];
-contractTypesList: string[]=[];
-dateDebutContrat: Date;
+  selectedTypeContrat: any="";
+  breadcrumbItems: MenuItem[]=[];
+  contractTypesList: string[]=[];
+  dateDebutContrat: Date;
   etudeLevelList: EtudeLevel[] | undefined;
   natureEtudeList!: EtudeNature[];
   responsablesList!: Responsable[] ;
@@ -38,27 +38,17 @@ dateDebutContrat: Date;
   collaborateursList!: string[];
   selectedCollabName!:string;
   collaborateursListFinal!: string[];
-onSubmit() {
-throw new Error('Method not implemented.');
-}
-
-
-
-pieces!: any[];
-uploadDocuments() {
-throw new Error('Method not implemented.');
-}
-contractTypes!: any[];
-salaireDeBase: any;
-avantages!: any[];
-selectedAvantage: any;
-selectedContractType: any;
-
-selectedPoste: any="responsable";
-responsables!: string[];
-selectedResponsable: any;
-documents!: any[];
-cin!: number;
+  pieces!: any[];
+  contractTypes!: any[];
+  salaireDeBase: any;
+  avantages!: any[];
+  selectedAvantage: any;
+  selectedContractType: any;
+  selectedPoste: any="responsable";
+  responsables!: string[];
+  selectedResponsable: any;
+  documents!: any[];
+  cin!: number;
   nomComplet!: string ;
   numCompte!: number;
   numSecuriteSociale!: number;
@@ -72,27 +62,29 @@ cin!: number;
   selectedNiveauEtude!:any;
   certifications!:any;
   anneeExperience!:any;
-  recommendation: boolean=false; // Default to 'no'
-collaborateurs!: Collaborateur[];
-comment!: string;
-obligedDocuments:string[]=[] ;
+  recommendation: boolean=false;
+  collaborateurs!: Collaborateur[];
+  comment!: string;
+  obligedDocuments:string[]=[] ;
   departements: Departement[] = [];
   departmentsList:string[]=[];
   selectedDepartement: any;
   postes: any[] = [];
   showResponsableDropdown:boolean=true;
+ dateFintContrat!: Date;
+  dateFinContrat!: Date;
 
 
-  constructor(private sannedDocumentService:SacannedDocumentService,private collaborateurService:CollaborateurService, private avantageService:SalaryAdvantageService,private departementService: DepartementService,private responsableService: ResponsableService,
-    private contractTypeService:ContractTypeService,private piecesService : PiecesJointesService,private etudeService: EtudeService,private toaster:ToastrService ) {
+  constructor(private messageService: MessageService,private sannedDocumentService:SacannedDocumentService,private collaborateurService:CollaborateurService, private avantageService:SalaryAdvantageService,private departementService: DepartementService,private responsableService: ResponsableService,
+    private contractTypeService:ContractTypeService,private piecesService : PiecesJointesService,private etudeService: EtudeService ) {
     this.dateDebutContrat = new Date();
 
   }
 
 
   ngOnInit(): void {
-    
-  
+
+
     this.avantageService.getAllSalaryAdvantages().subscribe(
       (data) => {
         this.avantagesList=data;
@@ -102,7 +94,7 @@ obligedDocuments:string[]=[] ;
     this.breadcrumbItems = [
 
       {
-          label: 'Consult GRH', icon: 'pi pi-fw pi-search'
+          label: 'Consult GRH', icon: 'pi pi-fw pi-search', routerLink: ['/collaborateurs']
       },
       {
         label: 'Nouveau collaborateur', icon: 'pi pi-fw pi-plus'
@@ -231,7 +223,17 @@ OnSelectType(){
 }
 addCollaborator(x:NgForm) {
   if(this.uploadedFiles)
-   { console.log("submitted",x.value);
+
+
+
+   {
+
+    if (this.dateFintContrat <= this.dateDebutContrat) {
+        this.messageService.add({severity:'info',detail:'Date fin de contrat must be after date début de contrat'})
+    return;
+     }
+     console.log("submitted ",x.value);
+
     const etudeNatureId = this.natureEtudeList.find(o => o.nature === this.selectedNatureEtude)?.id;
     console.log('etudeNatureId:', etudeNatureId);
 
@@ -264,12 +266,13 @@ addCollaborator(x:NgForm) {
       adresse: x.value.adresse,
       email: x.value.email,
       certifications: x.value.certifications,
+      salaireDeBase:x.value.salaireDeBase,
       anneeExperience: x.value.anneeExperience,
       dateDebutContrat: new Date(x.value.dateDebutContrat),
       dateFinContrat: new Date(x.value.dateFinContrat),
-      recommandation:this.recommendation,
-      collaborateurRecommande: x.value.collaborateurRecommande,
-      commentaire: x.value.commentaire,
+      recommandation:this.recommendation? true:false,
+      collaborateurRecommande: x.value.collaborateurs,
+      commentaire: x.value.comment,
     };
     console.log("req playload= ",requestPayload );
 
@@ -283,20 +286,21 @@ addCollaborator(x:NgForm) {
       requestPayload
     ).subscribe(data => {
       console.log("data at the end :",data);
-      this.toaster.success("collab ajouter avec succes")
+      this.messageService.add({severity:'success',summary:'Success',detail:'collaborateur ajouter'})
       this.uploadedFiles.forEach((file: File) => {
         this.sannedDocumentService.uploadPdf(file, x.value.cin).subscribe(
-          
+
         );
       });
 
     },(error)=>{
-      console.log("error happened here ");
-      this.toaster.error("error happened")
+      console.log("error:",error);
+
+      this.messageService.add({severity:'error',summary:'Erreur',detail:error.error.message})
 
     });}
     else{
-      this.toaster.info("svp uploader le document :)")
+      this.messageService.add({severity:'info',summary:'Attention',detail:'svp uploader le document :)'})
     }
 
 
@@ -320,6 +324,10 @@ search(event: any) {
   this.collaborateursListFinal = this.collaborateursList.filter((collaborateur) =>
     collaborateur.toLowerCase().includes(query)
   );
+}
+resetForm(form: NgForm): void {
+  form.resetForm();
+  this.recommendation=false;
 }
 
 
