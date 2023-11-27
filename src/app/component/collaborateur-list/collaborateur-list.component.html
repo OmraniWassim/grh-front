@@ -58,12 +58,12 @@
   <p-table [value]="collaborateurs">
     <ng-template pTemplate="header">
       <tr>
-        <th>ID</th>
-        <th>Nom Complet</th>
-        <th>Poste</th>
-        <th>Type Contrat</th>
-        <th>Years of Experience</th>
-        <th>Actions</th>
+        <th pSortableColumn="id">ID<p-sortIcon field="code"></p-sortIcon> </th>
+        <th pSortableColumn="nomComplet">Nom Complet<p-sortIcon field="code"></p-sortIcon> </th>
+        <th pSortableColumn="poste.posteName">Poste<p-sortIcon field="code"></p-sortIcon> </th>
+        <th pSortableColumn="contractType.type">Type Contrat<p-sortIcon field="code"></p-sortIcon> </th>
+        <th pSortableColumn="anneeExperience">Years of Experience<p-sortIcon field="code"></p-sortIcon> </th>
+        <th >Actions </th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-collaborateur>
@@ -281,9 +281,9 @@
                   ></p-fileUpload>      <p-table [value]="documents">
                       <ng-template pTemplate="header">
                         <tr>
-                          <th>Documents</th>
-                          <th>Obligatoire</th>
-                          <th>Status</th>
+                          <th>Documents<p-sortIcon field="code"></p-sortIcon> </th>
+                          <th>Obligatoire<p-sortIcon field="code"></p-sortIcon> </th>
+                          <th>Status<p-sortIcon field="code"></p-sortIcon> </th>
                         </tr>
                       </ng-template>
                       <ng-template pTemplate="body" let-document>

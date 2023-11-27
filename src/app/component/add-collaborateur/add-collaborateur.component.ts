@@ -14,7 +14,6 @@ import { PiecesJointesService } from 'src/app/service/PiecesJointes.service';
 import { ResponsableService } from 'src/app/service/Responsable.service';
 import { SalaryAdvantageService } from 'src/app/service/SalaryAdvantage.service';
 import { CollaborateurService } from 'src/app/service/collaborateur.service';
-import { ToastrService } from 'ngx-toastr';
 import { SacannedDocumentService } from 'src/app/service/ScannedDocument.service';
 import { Responsable } from 'src/app/model/Responsable';
 
@@ -73,6 +72,7 @@ export class AddCollaborateurComponent implements OnInit {
   showResponsableDropdown:boolean=true;
  dateFintContrat!: Date;
   dateFinContrat: Date | undefined ;
+
 
 
   constructor(private messageService: MessageService,private sannedDocumentService:SacannedDocumentService,private collaborateurService:CollaborateurService, private avantageService:SalaryAdvantageService,private departementService: DepartementService,private responsableService: ResponsableService,
