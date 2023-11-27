@@ -72,7 +72,7 @@ export class AddCollaborateurComponent implements OnInit {
   postes: any[] = [];
   showResponsableDropdown:boolean=true;
  dateFintContrat!: Date;
-  dateFinContrat!: Date;
+  dateFinContrat: Date | undefined ;
 
 
   constructor(private messageService: MessageService,private sannedDocumentService:SacannedDocumentService,private collaborateurService:CollaborateurService, private avantageService:SalaryAdvantageService,private departementService: DepartementService,private responsableService: ResponsableService,
@@ -222,39 +222,27 @@ OnSelectType(){
   );
 }
 addCollaborator(x:NgForm) {
-  if(this.uploadedFiles)
-
-
-
-   {
+  if(this.uploadedFiles){
+    if(this.selectedContractType!="CDD"){
+      this.dateFintContrat=new Date;
+    }
 
     if (this.dateFintContrat <= this.dateDebutContrat) {
-        this.messageService.add({severity:'info',detail:'Date fin de contrat must be after date début de contrat'})
+        this.messageService.add({severity:'info',detail:'Date fin de contrat doit etre après date début de contrat'})
     return;
      }
-     console.log("submitted ",x.value);
 
     const etudeNatureId = this.natureEtudeList.find(o => o.nature === this.selectedNatureEtude)?.id;
-    console.log('etudeNatureId:', etudeNatureId);
 
     const etudeLevelId = this.etudeLevelList?.find(o => o.niveaux === this.selectedNiveauEtude)?.id;
-    console.log('etudeLevelId:', etudeLevelId);
 
     const contractTypeId = this.contractTypes.find(o => o.type === x.value.typeContrat)?.id;
-    console.log('loiste des avanatges:', this.avantagesList);
-    console.log("x.value.avantageSalaire",x.value.avantageSalaire);
 
     const salaryAdvantageId = this.avantagesList?.find( o=>o.advantage === x.value.avantageSalaire)?.id;
-    console.log('salaryAdvantageId:', salaryAdvantageId);
 
     const posteId = this.postesList?.find(o => o.posteName === x.value.poste)?.id;
-    console.log('posteId:', posteId);
 
     const responsableId = this.responsablesList?.find(o => o.resName === this.selectedResponsable)?.id;
-    console.log('responsableId:', responsableId);
-
-    const departementId=this.departements.find(o=>o.depName===this.selectedDepartement)?.id;
-    console.log("depId= ",departementId);
 
     const requestPayload: Collaborateur = {
       cin: x.value.cin,
@@ -282,7 +270,7 @@ addCollaborator(x:NgForm) {
       contractTypeId,
       salaryAdvantageId,
       posteId,
-      responsableId,
+      responsableId? responsableId:0,
       requestPayload
     ).subscribe(data => {
       console.log("data at the end :",data);
@@ -294,9 +282,12 @@ addCollaborator(x:NgForm) {
       });
 
     },(error)=>{
-      console.log("error:",error);
+      if(error.status===400){
+        this.messageService.add({severity:'error',summary:'Erreur',detail:error.error})
 
-      this.messageService.add({severity:'error',summary:'Erreur',detail:error.error.message})
+      }
+      this.messageService.add({severity:'error',summary:'Erreur',detail:"verifier les donnees"})
+
 
     });}
     else{

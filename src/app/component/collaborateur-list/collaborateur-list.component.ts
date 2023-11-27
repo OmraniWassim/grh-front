@@ -5,12 +5,8 @@ import { MenuItem, MessageService} from 'primeng/api';
 import { Collaborateur } from 'src/app/model/collaborateur';
 import { SacannedDocumentService } from 'src/app/service/ScannedDocument.service';
 import { CollaborateurService } from 'src/app/service/collaborateur.service';
-import { SalaryAdvantage } from 'c:/Users/wassim/grh-front/src/app/model/SalaryAdvantage';
 import { Departement } from 'src/app/model/Departement';
-import { EtudeLevel } from 'c:/Users/wassim/grh-front/src/app/model/EtudeLevel';
-import { EtudeNature } from 'c:/Users/wassim/grh-front/src/app/model/EtudeNature';
-import { Poste } from 'c:/Users/wassim/grh-front/src/app/model/Poste';
-import { Responsable } from 'c:/Users/wassim/grh-front/src/app/model/Responsable';
+
 import { ContractTypeService } from 'src/app/service/ContractType.service';
 import { DepartementService } from 'src/app/service/Departement.service';
 import { EtudeService } from 'src/app/service/Etude.service';
@@ -18,6 +14,11 @@ import { PiecesJointesService } from 'src/app/service/PiecesJointes.service';
 import { ResponsableService } from 'src/app/service/Responsable.service';
 import { SalaryAdvantageService } from 'src/app/service/SalaryAdvantage.service';
 import { NgForm } from '@angular/forms';
+import { EtudeLevel } from 'src/app/model/EtudeLevel';
+import { EtudeNature } from 'src/app/model/EtudeNature';
+import { Poste } from 'src/app/model/Poste';
+import { Responsable } from 'src/app/model/Responsable';
+import { SalaryAdvantage } from 'src/app/model/SalaryAdvantage';
 
 
 
@@ -95,7 +96,7 @@ options: any;
   selectedDepartement!: any;
   postes: any[] = [];
   showResponsableDropdown:boolean=true;
-  dateFinContrat!: Date;
+  dateFinContrat!: Date ;
   idOfCollabToUpdate:number | undefined;
   @ViewChild('addForm') addForm!: NgForm;
 
@@ -109,6 +110,8 @@ options: any;
 
     this.collaborateurService.calculateAgePyramid().subscribe((result) => {
       this.agePyramid = result;
+      console.log("result=",result);
+      
       const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
       this.data = {
@@ -396,8 +399,14 @@ options: any;
  }
 
  saveUpdate(x: NgForm) {
-  console.log('Form:', this.addForm.value);
+  if(this.selectedContractType!="CDD"){
+    this.dateFinContrat=new Date;
+  }
 
+  if (this.dateFinContrat <= this.dateDebutContrat) {
+      this.messageService.add({severity:'info',detail:'Date fin de contrat doit etre après date début de contrat'})
+  return;
+   }
     const etudeNatureId = this.natureEtudeList.find(o => o.nature === this.selectedNatureEtude)?.id;
     console.log('etudeNatureId:', etudeNatureId);
 
@@ -407,7 +416,7 @@ options: any;
     const contractTypeId = this.contractTypes.find(o => o.type === x.value.typeContrat)?.id;
     console.log("contract type id:", contractTypeId);
 
-  console.log("contract type id:" ,contractTypeId);
+    console.log("contract type id:" ,contractTypeId);
 
     const salaryAdvantageId = this.avantagesList?.find( o=>o.advantage === x.value.avantageSalaire)?.id;
     console.log('salaryAdvantageId:', salaryAdvantageId);
