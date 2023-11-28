@@ -54,6 +54,7 @@
 
 
   <button pButton pRipple label="Ajouter collaborateur" icon="pi pi-plus" class="p-button-success mr-2" (click)="addNewCollab()"></button>
+  <button pButton pRipple label="Exporter collaborateurs report" icon="pi pi-upload" class="p-button-help" (click)="uploadJasper()" ></button>
   <p></p>
   <p-table [value]="collaborateurs">
     <ng-template pTemplate="header">
@@ -239,7 +240,7 @@
                     <div *ngIf="selectedTypeContrat === 'CDD'" class="p-formgrid grid">
                       <div class="field col">
                         <label>Date fin de Contrat</label>
-                        <p-calendar [showIcon]="true" id="dateDebutContrat" name="dateFinContrat" [(ngModel)]="dateFinContrat"></p-calendar>
+                        <p-calendar [showIcon]="true" id="dateDebutContrat" name="dateFinContrat" [minDate]="dateDebutContrat" [(ngModel)]="dateFinContrat"></p-calendar>
                       </div>
                     </div>
                   </div>

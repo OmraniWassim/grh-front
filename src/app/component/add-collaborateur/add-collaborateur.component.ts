@@ -70,8 +70,9 @@ export class AddCollaborateurComponent implements OnInit {
   selectedDepartement: any;
   postes: any[] = [];
   showResponsableDropdown:boolean=true;
- dateFintContrat!: Date;
+  dateFintContrat!: Date;
   dateFinContrat: Date | undefined ;
+  maxDate!:Date;
 
 
 
@@ -83,6 +84,9 @@ export class AddCollaborateurComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.maxDate = new Date();
+    this.maxDate.setMonth(12);
+    this.maxDate.setFullYear(2005);
 
 
     this.avantageService.getAllSalaryAdvantages().subscribe(
@@ -223,10 +227,7 @@ OnSelectType(){
 }
 addCollaborator(x:NgForm) {
   if(this.uploadedFiles){
-    if(this.selectedContractType!="CDD"){
-      this.dateFintContrat=new Date;
-    }
-
+  
     if (this.dateFintContrat <= this.dateDebutContrat) {
         this.messageService.add({severity:'info',detail:'Date fin de contrat doit etre après date début de contrat'})
     return;
@@ -262,7 +263,6 @@ addCollaborator(x:NgForm) {
       collaborateurRecommande: x.value.collaborateurs,
       commentaire: x.value.comment,
     };
-    console.log("req playload= ",requestPayload );
 
     this.collaborateurService.createCollaborateur(
       etudeNatureId,
@@ -273,8 +273,9 @@ addCollaborator(x:NgForm) {
       responsableId? responsableId:0,
       requestPayload
     ).subscribe(data => {
-      console.log("data at the end :",data);
-      this.messageService.add({severity:'success',summary:'Success',detail:'collaborateur ajouter'})
+      this.messageService.add({severity:'success',summary:'Success',detail:'collaborateur ajouter'});
+      x.resetForm();
+      this.recommendation=false;
       this.uploadedFiles.forEach((file: File) => {
         this.sannedDocumentService.uploadPdf(file, x.value.cin).subscribe(
 
@@ -286,7 +287,6 @@ addCollaborator(x:NgForm) {
         this.messageService.add({severity:'error',summary:'Erreur',detail:error.error})
 
       }
-      this.messageService.add({severity:'error',summary:'Erreur',detail:"verifier les donnees"})
 
 
     });}

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Collaborateur } from '../model/collaborateur';
 
@@ -60,5 +60,13 @@ export class CollaborateurService {
 
   calculateAverageSalary(): Observable<number> {
     return this.http.get<number>(`${this.apiUrl}/calculateAverageSalary`);
+  }
+  downloadPdf(): Observable<Blob> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/pdf' });
+  
+    return this.http.get(`${this.apiUrl}/report`, {
+      headers: headers,
+      responseType: 'blob' 
+    });
   }
 }

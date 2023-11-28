@@ -117,12 +117,13 @@ options: any;
       this.data = {
         labels: Object.keys(result),
         datasets: [
-            {
-                data: Object.values(result),
-                backgroundColor: ['#3498db', '#f1c40f', '#2ecc71', '#e74c3c'],
-                hoverBackgroundColor: ['#2980b9', '#f39c12', '#27ae60', '#c0392b']
-            }
-        ]
+          {
+              data: Object.values(result),
+              backgroundColor: ['#3498db', '#f1c40f', '#2ecc71', '#e74c3c', '#9b59b6', '#e67e22'],
+              hoverBackgroundColor: ['#2980b9', '#f39c12', '#27ae60', '#c0392b', '#8e44ad', '#d35400']
+          }
+      ]
+      
     };
 
     this.options = {
@@ -191,11 +192,9 @@ options: any;
 }
 
   loadCollaborateurs() {
-    console.log("enterd");
 
     this.collaborateurService.getAllCollaborateurs().subscribe((data) => {
       this.collaborateurs = data;
-      console.log("data =",data)
     });
   }
 
@@ -505,6 +504,21 @@ options: any;
 
       });
     }
+ }
+ uploadJasper(){
+  this.collaborateurService.downloadPdf().subscribe(
+      (data: Blob) => {
+        const blob = new Blob([data], { type: 'application/pdf' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = `Jasper Report.pdf`;
+        link.click();
+      },
+      (error) => {
+        console.error('Error downloading PDF:', error);
+      }
+    );
+
  }
 
 

@@ -57,7 +57,7 @@
       <div class="p-formgrid grid">
         <div class="field col">
           <label for="dateNaissance">Date Naissance*</label>
-          <p-calendar  [showIcon]="true" inputId="dateNaissance" name="dateNaissance" [required]="true" [(ngModel)]="dateNaissance" dateFormat="dd/mm/yy"></p-calendar>
+          <p-calendar  [showIcon]="true" inputId="dateNaissance" name="dateNaissance" [required]="true" [(ngModel)]="dateNaissance" dateFormat="dd/mm/yy" [maxDate]="maxDate"></p-calendar>
         </div>
         <div class="field col">
           <label for="numTelephone">Num Telephone*</label>
@@ -131,7 +131,7 @@
       <div *ngIf="selectedTypeContrat === 'CDD'" class="p-formgrid grid">
         <div class="field col">
           <label>Date fin de Contrat</label>
-          <p-calendar [showIcon]="true" id="dateDebutContrat" name="dateFinContrat" [(ngModel)]="dateFintContrat"></p-calendar>
+          <p-calendar [showIcon]="true" id="dateDebutContrat" [minDate]="dateDebutContrat" name="dateFinContrat" [(ngModel)]="dateFintContrat"></p-calendar>
         </div>
       </div>
     </div>
