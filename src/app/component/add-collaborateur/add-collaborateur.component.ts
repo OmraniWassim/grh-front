@@ -274,13 +274,13 @@ addCollaborator(x:NgForm) {
       requestPayload
     ).subscribe(data => {
       this.messageService.add({severity:'success',summary:'Success',detail:'collaborateur ajouter'});
-      x.resetForm();
-      this.recommendation=false;
       this.uploadedFiles.forEach((file: File) => {
         this.sannedDocumentService.uploadPdf(file, x.value.cin).subscribe(
 
         );
       });
+      x.resetForm();
+      this.recommendation=false;
 
     },(error)=>{
       if(error.status===400){
