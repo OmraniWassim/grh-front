@@ -24,18 +24,18 @@ import { Responsable } from 'src/app/model/Responsable';
   styleUrls: ['./add-collaborateur.component.scss']
 })
 export class AddCollaborateurComponent implements OnInit {
-  selectedTypeContrat: any="";
-  breadcrumbItems: MenuItem[]=[];
-  contractTypesList: string[]=[];
+  selectedTypeContrat: any = "";
+  breadcrumbItems: MenuItem[] = [];
+  contractTypesList: string[] = [];
   dateDebutContrat: Date;
   etudeLevelList: EtudeLevel[] | undefined;
   natureEtudeList!: EtudeNature[];
-  responsablesList!: Responsable[] ;
+  responsablesList!: Responsable[];
   postesList: Poste[] | undefined;
   avantagesList: SalaryAdvantage[] | undefined;
   uploadedFiles: any;
   collaborateursList!: string[];
-  selectedCollabName!:string;
+  selectedCollabName!: string;
   collaborateursListFinal!: string[];
   pieces!: any[];
   contractTypes!: any[];
@@ -43,41 +43,41 @@ export class AddCollaborateurComponent implements OnInit {
   avantages!: any[];
   selectedAvantage: any;
   selectedContractType: any;
-  selectedPoste: any="responsable";
+  selectedPoste: any = "responsable";
   responsables!: string[];
   selectedResponsable: any;
   documents!: any[];
   cin!: number;
-  nomComplet!: string ;
+  nomComplet!: string;
   numCompte!: number;
   numSecuriteSociale!: number;
   numTelephone!: number;
   dateNaissance!: Date;
   adresse!: string;
   email!: string;
-  natureEtudeOptions! :any[];
-  niveauEtudeOptions! :string[];
-  selectedNatureEtude!:any;
-  selectedNiveauEtude!:any;
-  certifications!:any;
-  anneeExperience!:any;
-  recommendation: boolean=false;
+  natureEtudeOptions!: any[];
+  niveauEtudeOptions!: string[];
+  selectedNatureEtude!: any;
+  selectedNiveauEtude!: any;
+  certifications!: any;
+  anneeExperience!: any;
+  recommendation: boolean = false;
   collaborateurs!: Collaborateur[];
   comment!: string;
-  obligedDocuments:string[]=[] ;
+  obligedDocuments: string[] = [];
   departements: Departement[] = [];
-  departmentsList:string[]=[];
+  departmentsList: string[] = [];
   selectedDepartement: any;
   postes: any[] = [];
-  showResponsableDropdown:boolean=true;
+  showResponsableDropdown: boolean = true;
   dateFintContrat!: Date;
-  dateFinContrat: Date | undefined ;
-  maxDate!:Date;
+  dateFinContrat: Date | undefined;
+  maxDate!: Date;
 
 
 
-  constructor(private messageService: MessageService,private sannedDocumentService:SacannedDocumentService,private collaborateurService:CollaborateurService, private avantageService:SalaryAdvantageService,private departementService: DepartementService,private responsableService: ResponsableService,
-    private contractTypeService:ContractTypeService,private piecesService : PiecesJointesService,private etudeService: EtudeService ) {
+  constructor(private messageService: MessageService, private sannedDocumentService: SacannedDocumentService, private collaborateurService: CollaborateurService, private avantageService: SalaryAdvantageService, private departementService: DepartementService, private responsableService: ResponsableService,
+    private contractTypeService: ContractTypeService, private piecesService: PiecesJointesService, private etudeService: EtudeService) {
     this.dateDebutContrat = new Date();
 
   }
@@ -91,43 +91,42 @@ export class AddCollaborateurComponent implements OnInit {
 
     this.avantageService.getAllSalaryAdvantages().subscribe(
       (data) => {
-        this.avantagesList=data;
+        this.avantagesList = data;
       }
     );
 
     this.breadcrumbItems = [
 
       {
-          label: 'Consult GRH', icon: 'pi pi-fw pi-search', routerLink: ['/collaborateurs']
+        label: 'Consult GRH', icon: 'pi pi-fw pi-search', routerLink: ['/collaborateurs']
       },
       {
         label: 'Nouveau collaborateur', icon: 'pi pi-fw pi-plus'
       },
 
-     ];
-     this.loadDepartements();
-     this.loadResponsables();
-     this.loadContractTypes();
-     this.loadPieces();
-     this.loadEtudes();
-     this.loadCollabs();
+    ];
+    this.loadDepartements();
+    this.loadResponsables();
+    this.loadContractTypes();
+    this.loadPieces();
+    this.loadEtudes();
+    this.loadCollabs();
   }
-  loadPieces(){
+  loadPieces() {
     this.piecesService.getAllPiecesJointess().subscribe(
       (data) => {
-        this.documents=data;
+        this.documents = data;
       },
       (error) => {
         console.error('Error fetching departements:', error);
       }
     );
   }
-  loadEtudes(){
+  loadEtudes() {
     this.etudeService.getAllEtudeLevels().subscribe(
       (data) => {
-        this.etudeLevelList=data;
+        this.etudeLevelList = data;
         this.niveauEtudeOptions = data.map((c) => c.niveaux);
-        console.log(this.niveauEtudeOptions);
 
       },
       (error) => {
@@ -136,9 +135,8 @@ export class AddCollaborateurComponent implements OnInit {
     );
     this.etudeService.getAllEtudeNatures().subscribe(
       (data) => {
-        console.log(data);
         this.natureEtudeOptions = data.map((c) => c.nature);
-        this.natureEtudeList=data;
+        this.natureEtudeList = data;
 
       },
       (error) => {
@@ -152,7 +150,7 @@ export class AddCollaborateurComponent implements OnInit {
   loadContractTypes(): void {
     this.contractTypeService.getAllContractTypes().subscribe(
       (data) => {
-        this.contractTypes=data;
+        this.contractTypes = data;
         this.contractTypesList = data.map((c) => c.type);
       },
       (error) => {
@@ -163,7 +161,7 @@ export class AddCollaborateurComponent implements OnInit {
   loadDepartements(): void {
     this.departementService.getAllDepartements().subscribe(
       (data) => {
-        this.departements=data;
+        this.departements = data;
         this.departmentsList = data.map((departement) => departement.depName);
       },
       (error) => {
@@ -174,7 +172,7 @@ export class AddCollaborateurComponent implements OnInit {
   loadResponsables(): void {
     this.responsableService.getAllResponsables().subscribe(
       (data) => {
-        this.responsablesList=data;
+        this.responsablesList = data;
         this.responsables = data.map((responsable) => responsable.resName);
       },
       (error) => {
@@ -182,16 +180,14 @@ export class AddCollaborateurComponent implements OnInit {
       }
     );
   }
-  onDepartementChange(selectedValue:any): void {
-    this.selectedDepartement=selectedValue;
+  onDepartementChange(selectedValue: any): void {
+    this.selectedDepartement = selectedValue;
     if (this.selectedDepartement) {
-      console.log("entered");
 
       const selectedDep = this.departements.find(dep => dep.depName === this.selectedDepartement);
       if (selectedDep) {
-        console.log("eneteed here ");
-        this.postesList=selectedDep.postes;
-        this.postes=selectedDep.postes.map((poste)=>poste.posteName);
+        this.postesList = selectedDep.postes;
+        this.postes = selectedDep.postes.map((poste) => poste.posteName);
 
       } else {
         console.error("Selected Departement not found.");
@@ -200,126 +196,127 @@ export class AddCollaborateurComponent implements OnInit {
       this.postes = [];
     }
   }
- onPosteChange(event: any): void {
+  onPosteChange(event: any): void {
 
 
-  if (this.selectedPoste === 'Responsable') {
+    if (this.selectedPoste === 'Responsable') {
       this.showResponsableDropdown = false;
 
-  } else {
-    this.showResponsableDropdown = true;
+    } else {
+      this.showResponsableDropdown = true;
 
-  }
-}
-OnSelectType(){
-  const selectedType = this.contractTypes.find(c => c.type===this.selectedTypeContrat);
-  this.salaireDeBase=selectedType.salaireBase;
-  this.avantages=selectedType.salaryAdvantages.map((s: { advantage: SalaryAdvantage; })=>s.advantage);
-
-  this.contractTypeService.getPiecesJointesByContractType(this.selectedTypeContrat).subscribe(
-    (data) => {
-      this.obligedDocuments=data;
-    },
-    (error) => {
-      console.error('Error fetching pieces jointes:', error);
     }
-  );
-}
-addCollaborator(x:NgForm) {
-  if(this.uploadedFiles){
-  
-    if (this.dateFintContrat <= this.dateDebutContrat) {
-        this.messageService.add({severity:'info',detail:'Date fin de contrat doit etre après date début de contrat'})
-    return;
-     }
+  }
+  OnSelectType() {
+    const selectedType = this.contractTypes.find(c => c.type === this.selectedTypeContrat);
+    this.salaireDeBase = selectedType.salaireBase;
+    this.avantages = selectedType.salaryAdvantages.map((s: { advantage: SalaryAdvantage; }) => s.advantage);
 
-    const etudeNatureId = this.natureEtudeList.find(o => o.nature === this.selectedNatureEtude)?.id;
+    this.contractTypeService.getPiecesJointesByContractType(this.selectedTypeContrat).subscribe(
+      (data) => {
+        this.obligedDocuments = data;
+      },
+      (error) => {
+        console.error('Error fetching pieces jointes:', error);
+      }
+    );
+  }
+  addCollaborator(x: NgForm) {
+    if (this.uploadedFiles) {
 
-    const etudeLevelId = this.etudeLevelList?.find(o => o.niveaux === this.selectedNiveauEtude)?.id;
-
-    const contractTypeId = this.contractTypes.find(o => o.type === x.value.typeContrat)?.id;
-
-    const salaryAdvantageId = this.avantagesList?.find( o=>o.advantage === x.value.avantageSalaire)?.id;
-
-    const posteId = this.postesList?.find(o => o.posteName === x.value.poste)?.id;
-
-    const responsableId = this.responsablesList?.find(o => o.resName === this.selectedResponsable)?.id;
-
-    const requestPayload: Collaborateur = {
-      cin: x.value.cin,
-      nomComplet: x.value.nomComplet,
-      numCompte: x.value.numCompte,
-      numSecuriteSociale: x.value.numSecuriteSociale,
-      numTelephone: x.value.numTelephone,
-      dateNaissance: new Date(x.value.dateNaissance),
-      adresse: x.value.adresse,
-      email: x.value.email,
-      certifications: x.value.certifications,
-      salaireDeBase:x.value.salaireDeBase,
-      anneeExperience: x.value.anneeExperience,
-      dateDebutContrat: new Date(x.value.dateDebutContrat),
-      dateFinContrat: new Date(x.value.dateFinContrat),
-      recommandation:this.recommendation? true:false,
-      collaborateurRecommande: x.value.collaborateurs,
-      commentaire: x.value.comment,
-    };
-
-    this.collaborateurService.createCollaborateur(
-      etudeNatureId,
-      etudeLevelId,
-      contractTypeId,
-      salaryAdvantageId,
-      posteId,
-      responsableId? responsableId:0,
-      requestPayload
-    ).subscribe(data => {
-      this.messageService.add({severity:'success',summary:'Success',detail:'collaborateur ajouter'});
-      this.uploadedFiles.forEach((file: File) => {
-        this.sannedDocumentService.uploadPdf(file, x.value.cin).subscribe(
-
-        );
-      });
-      x.resetForm();
-      this.recommendation=false;
-
-    },(error)=>{
-      if(error.status===400){
-        this.messageService.add({severity:'error',summary:'Erreur',detail:error.error})
-
+      if (this.dateFintContrat <= this.dateDebutContrat) {
+        this.messageService.add({ severity: 'info', detail: 'Date fin de contrat doit etre après date début de contrat' })
+        return;
       }
 
+      const etudeNatureId = this.natureEtudeList.find(o => o.nature === this.selectedNatureEtude)?.id;
 
-    });}
-    else{
-      this.messageService.add({severity:'info',summary:'Attention',detail:'svp uploader le document :)'})
+      const etudeLevelId = this.etudeLevelList?.find(o => o.niveaux === this.selectedNiveauEtude)?.id;
+
+      const contractTypeId = this.contractTypes.find(o => o.type === x.value.typeContrat)?.id;
+
+      const salaryAdvantageId = this.avantagesList?.find(o => o.advantage === x.value.avantageSalaire)?.id;
+
+      const posteId = this.postesList?.find(o => o.posteName === x.value.poste)?.id;
+
+      const responsableId = this.responsablesList?.find(o => o.resName === this.selectedResponsable)?.id;
+
+      const requestPayload: Collaborateur = {
+        cin: x.value.cin,
+        nomComplet: x.value.nomComplet,
+        numCompte: x.value.numCompte,
+        numSecuriteSociale: x.value.numSecuriteSociale,
+        numTelephone: x.value.numTelephone,
+        dateNaissance: new Date(x.value.dateNaissance),
+        adresse: x.value.adresse,
+        email: x.value.email,
+        certifications: x.value.certifications,
+        salaireDeBase: x.value.salaireDeBase,
+        anneeExperience: x.value.anneeExperience,
+        dateDebutContrat: new Date(x.value.dateDebutContrat),
+        dateFinContrat: new Date(x.value.dateFinContrat),
+        recommandation: this.recommendation ? true : false,
+        collaborateurRecommande: x.value.collaborateurs,
+        commentaire: x.value.comment,
+      };
+
+      this.collaborateurService.createCollaborateur(
+        etudeNatureId,
+        etudeLevelId,
+        contractTypeId,
+        salaryAdvantageId,
+        posteId,
+        responsableId ? responsableId : 0,
+        requestPayload
+      ).subscribe(data => {
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'collaborateur ajouter' });
+        this.uploadedFiles.forEach((file: File) => {
+          this.sannedDocumentService.uploadPdf(file, x.value.cin).subscribe(
+
+          );
+        });
+        x.resetForm();
+        this.recommendation = false;
+
+      }, (error) => {
+        if (error.status === 400) {
+          this.messageService.add({ severity: 'error', summary: 'Erreur', detail: error.error })
+
+        }
+
+
+      });
+    }
+    else {
+      this.messageService.add({ severity: 'info', summary: 'Attention', detail: 'svp uploader le document :)' })
     }
 
 
 
 
-}
-onBasicUpload(event:any) {
-   this.uploadedFiles = event.files;
+  }
+  onBasicUpload(event: any) {
+    this.uploadedFiles = event.files;
 
-}
-loadCollabs(){
-  this.collaborateurService.getAllCollaborateurs().subscribe(data=>{
-    this.collaborateurs=data;
-    this.collaborateursList=data.map(c=>c.nomComplet);
+  }
+  loadCollabs() {
+    this.collaborateurService.getAllCollaborateurs().subscribe(data => {
+      this.collaborateurs = data;
+      this.collaborateursList = data.map(c => c.nomComplet);
 
-  })
-}
+    })
+  }
 
-search(event: any) {
-  const query = event.query.toLowerCase();
-  this.collaborateursListFinal = this.collaborateursList.filter((collaborateur) =>
-    collaborateur.toLowerCase().includes(query)
-  );
-}
-resetForm(form: NgForm): void {
-  form.resetForm();
-  this.recommendation=false;
-}
+  search(event: any) {
+    const query = event.query.toLowerCase();
+    this.collaborateursListFinal = this.collaborateursList.filter((collaborateur) =>
+      collaborateur.toLowerCase().includes(query)
+    );
+  }
+  resetForm(form: NgForm): void {
+    form.resetForm();
+    this.recommendation = false;
+  }
 
 
 
