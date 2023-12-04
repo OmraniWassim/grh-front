@@ -6,15 +6,18 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { ButtonModule } from 'primeng/button';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { AppConfigComponent } from './app.config.component';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
-    imports: [
+
+  imports: [
         CommonModule,
         FormsModule,
         SidebarModule,
         RadioButtonModule,
         ButtonModule,
-        InputSwitchModule
+        InputSwitchModule,
+        DropdownModule
     ],
     declarations: [
         AppConfigComponent

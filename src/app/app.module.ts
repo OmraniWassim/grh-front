@@ -26,7 +26,15 @@ import { ToastrModule } from 'ngx-toastr';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ChartModule } from 'primeng/chart';
 import { ToastModule } from 'primeng/toast';
+import {TranslateLoader,TranslateModule} from "@ngx-translate/core";
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
 
+
+
+export function HttpLoaderFactory(http:HttpClient){
+  return new TranslateHttpLoader(http,"./assets/i18n/",".json")
+}
 
 @NgModule({
   declarations: [
@@ -58,7 +66,14 @@ import { ToastModule } from 'primeng/toast';
     ToastrModule.forRoot(),
     AutoCompleteModule,
     ChartModule,
-    ToastModule
+    ToastModule,
+    TranslateModule.forRoot({
+      loader:{
+        provide:TranslateLoader,
+        useFactory:HttpLoaderFactory,
+        deps:[HttpClient]
+      }
+    })
 
 
 

@@ -19,8 +19,6 @@ import { Poste } from 'src/app/model/Poste';
 import { Responsable } from 'src/app/model/Responsable';
 import { SalaryAdvantage } from 'src/app/model/SalaryAdvantage';
 
-
-
 @Component({
   selector: 'app-collaborateur-list',
   templateUrl: './collaborateur-list.component.html',
@@ -100,18 +98,13 @@ export class CollaborateurListComponent implements OnInit {
   @ViewChild('addForm') addForm!: NgForm;
 
   constructor(private messageService: MessageService, private cdr: ChangeDetectorRef, private router: Router, private sannedDocumentService: SacannedDocumentService, private collaborateurService: CollaborateurService, private avantageService: SalaryAdvantageService, private departementService: DepartementService, private responsableService: ResponsableService,
-    private contractTypeService: ContractTypeService, private piecesService: PiecesJointesService, private etudeService: EtudeService, private toaster: ToastrService) { }
+    private contractTypeService: ContractTypeService, private piecesService: PiecesJointesService, private etudeService: EtudeService, private toaster: ToastrService) {}
+
+
+
+
 
   ngOnInit(): void {
-
-
-
-
-
-
-
-
-
     this.avantageService.getAllSalaryAdvantages().subscribe(
       (data) => {
         this.avantagesList = data;
