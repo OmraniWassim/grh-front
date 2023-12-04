@@ -1,3 +1,15 @@
 {
-  "test":"hi"
+  "test": "hello",
+  "CollabList": "Consult GHR",
+  "CollabAdd": "Add Collaborator",
+  "Masse salariale": "Payroll",
+  "AVG salaire": "Average Salary",
+  "Doghnut des ages": "Age Doughnut",
+  "Nom Complet": "Full Name",
+  "Poste": "Position",
+  "Type Contrat": "Contract Type",
+  "Years of Experience": "Experience Years",
+  "ConfirmDelete": "Confirm the deletion of this collaborator",
+  "Ajouter collaborateur":"Add new  collaborator",
+  "Exporter collaborateurs report":"Export collaborators report"
 }

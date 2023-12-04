@@ -18,6 +18,9 @@ import { EtudeNature } from 'src/app/model/EtudeNature';
 import { Poste } from 'src/app/model/Poste';
 import { Responsable } from 'src/app/model/Responsable';
 import { SalaryAdvantage } from 'src/app/model/SalaryAdvantage';
+import { TranslateService } from '@ngx-translate/core';
+import { TranslationService } from 'src/app/service/Translation.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-collaborateur-list',
@@ -28,6 +31,7 @@ import { SalaryAdvantage } from 'src/app/model/SalaryAdvantage';
 export class CollaborateurListComponent implements OnInit {
   data: any;
   options: any;
+  initialTranslationsLoaded: any;
 
   toggleRecommendation(value: boolean) {
     this.recommendation = value;
@@ -96,9 +100,23 @@ export class CollaborateurListComponent implements OnInit {
   dateFinContrat!: Date;
   idOfCollabToUpdate: number | undefined;
   @ViewChild('addForm') addForm!: NgForm;
+  languageChangedSubscription: Subscription;
 
-  constructor(private messageService: MessageService, private cdr: ChangeDetectorRef, private router: Router, private sannedDocumentService: SacannedDocumentService, private collaborateurService: CollaborateurService, private avantageService: SalaryAdvantageService, private departementService: DepartementService, private responsableService: ResponsableService,
-    private contractTypeService: ContractTypeService, private piecesService: PiecesJointesService, private etudeService: EtudeService, private toaster: ToastrService) {}
+  constructor(private translate: TranslateService, private messageService: MessageService, private cdr: ChangeDetectorRef, private router: Router, private sannedDocumentService: SacannedDocumentService, private collaborateurService: CollaborateurService, private avantageService: SalaryAdvantageService, private departementService: DepartementService, private responsableService: ResponsableService,
+    private contractTypeService: ContractTypeService, private piecesService: PiecesJointesService, private etudeService: EtudeService, private toaster: ToastrService, private translationService: TranslationService) {
+    this.translate.setDefaultLang('fr');
+    this.languageChangedSubscription = this.translationService.languageChanged.subscribe(() => {
+      if (this.initialTranslationsLoaded) {
+        this.updateTranslations();
+      }
+    });
+
+    this.translate.get(['CollabList', 'CollabAdd']).subscribe((translations: { [key: string]: string }) => {
+
+      this.initialTranslationsLoaded = true;
+      this.updateTranslations();
+    });
+  }
 
 
 
@@ -118,14 +136,29 @@ export class CollaborateurListComponent implements OnInit {
     this.loadPieces();
     this.loadEtudes();
     this.loadCollabs();
+    this.updateTranslations();
+
     this.breadcrumbItems = [
 
       {
-        label: 'Consult GRH', icon: 'pi pi-fw pi-search'
+        label: this.translate.instant("CollabList"), icon: 'pi pi-fw pi-search'
       },
 
     ];
 
+  }
+  private updateTranslations(): void {
+    this.translate.get(['CollabList']).subscribe((translations: { [key: string]: string }) => {
+      this.breadcrumbItems = [
+
+        {
+          label: this.translate.instant("CollabList"), icon: 'pi pi-fw pi-search'
+        },
+
+      ];
+
+      this.cdr.detectChanges();
+    });
   }
 
   loadStatistics() {
@@ -173,7 +206,7 @@ export class CollaborateurListComponent implements OnInit {
   confirmDelete() {
     this.deleteProductDialog = false;
     this.collaborateurService.deleteCollaborateur(this.collabIdTodelete).subscribe(() => {
-      this.toaster.success("success", "collaboratuer supprimer");
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'collaborateur supprimer' });
       this.loadCollaborateurs();
       this.loadStatistics();
 
@@ -443,7 +476,7 @@ export class CollaborateurListComponent implements OnInit {
         requestPayload
       ).subscribe(data => {
         this.collabDialog = false;
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Mis à jour avec succés' });
 
         this.loadCollaborateurs();
         this.loadStatistics();
@@ -476,7 +509,7 @@ export class CollaborateurListComponent implements OnInit {
             }
           });
         });
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Mis à jour avec succés' });
 
 
       }, (error) => {

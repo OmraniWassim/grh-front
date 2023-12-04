@@ -228,6 +228,10 @@ export class AddCollaborateurComponent implements OnInit {
         this.messageService.add({ severity: 'info', detail: 'Date fin de contrat doit etre après date début de contrat' })
         return;
       }
+      if(this.salaireDeBase<0){
+        this.messageService.add({ severity: 'info', detail: 'Salaire de base doit etre positive' })
+        return;
+      }
 
       const etudeNatureId = this.natureEtudeList.find(o => o.nature === this.selectedNatureEtude)?.id;
 

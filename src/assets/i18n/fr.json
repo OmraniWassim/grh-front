@@ -1,3 +1,17 @@
 {
-  "test":"bonjour"
+  "test":"bonjour",
+  "CollabList":"Consulter GRH",
+  "CollabAdd" :"Ajouter Collaborateur",
+  "Masse salariale":"Masse salariale",
+  "AVG salaire":"Salaire Moyen",
+  "Doghnut des ages":"Doghnut des ages",
+  "Nom Complet":"Nom Complet",
+  "Poste":"Poste",
+  "Type Contrat":"Type Contrat",
+  "Years of Experience":"Ancienneté",
+  "ConfirmDelete":"confirmer la suppression du cet collaborateur",
+  "Ajouter collaborateur":"Ajouter collaborateur",
+  "Exporter collaborateurs report":"Exporter collaborateurs report"
+
+
 }
