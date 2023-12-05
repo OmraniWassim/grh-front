@@ -169,7 +169,7 @@
 
   <p-card header="Pieces Jointes" class="pieces-card">
     <div class="card p-fluid">
-      <p-fileUpload mode="basic" chooseLabel="Choose" name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php"
+      <p-fileUpload mode="basic" chooseLabel="Choose" [auto]="true" name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php"
         accept=".pdf" [maxFileSize]="4 * 1024 * 1024" (onUpload)="onBasicUpload($event)"></p-fileUpload> <p-table
         [value]="documents">
         <ng-template pTemplate="header">
