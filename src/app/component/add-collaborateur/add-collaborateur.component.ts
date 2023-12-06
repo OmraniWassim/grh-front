@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MenuItem, MessageService } from 'primeng/api';
 import { Departement } from 'src/app/model/Departement';
@@ -16,6 +16,9 @@ import { SalaryAdvantageService } from 'src/app/service/SalaryAdvantage.service'
 import { CollaborateurService } from 'src/app/service/collaborateur.service';
 import { SacannedDocumentService } from 'src/app/service/ScannedDocument.service';
 import { Responsable } from 'src/app/model/Responsable';
+import { TranslationService } from 'src/app/service/Translation.service';
+import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -73,13 +76,43 @@ export class AddCollaborateurComponent implements OnInit {
   dateFintContrat!: Date;
   dateFinContrat: Date | undefined;
   maxDate!: Date;
+  languageChangedSubscription: Subscription;
+  initialTranslationsLoaded: any;
 
 
 
   constructor(private messageService: MessageService, private sannedDocumentService: SacannedDocumentService, private collaborateurService: CollaborateurService, private avantageService: SalaryAdvantageService, private departementService: DepartementService, private responsableService: ResponsableService,
-    private contractTypeService: ContractTypeService, private piecesService: PiecesJointesService, private etudeService: EtudeService) {
+    private contractTypeService: ContractTypeService, private piecesService: PiecesJointesService, private etudeService: EtudeService, private translationService: TranslationService, private translate: TranslateService, private cdr: ChangeDetectorRef) {
+    this.translate.setDefaultLang('fr');
+    this.languageChangedSubscription = this.translationService.languageChanged.subscribe(() => {
+      if (this.initialTranslationsLoaded) {
+        this.updateTranslations();
+      }
+    });
+
+    this.translate.get(['CollabList', 'CollabAdd']).subscribe((translations: { [key: string]: string }) => {
+
+      this.initialTranslationsLoaded = true;
+      this.updateTranslations();
+    });
     this.dateDebutContrat = new Date();
 
+  }
+  updateTranslations() {
+    this.translate.get(['CollabList', 'CollabAdd']).subscribe((translations: { [key: string]: string }) => {
+      this.breadcrumbItems = [
+
+        {
+          label: this.translate.instant("CollabList"), icon: 'pi pi-fw pi-search', routerLink: ['/collaborateurs']
+        },
+        {
+          label: this.translate.instant("CollabAdd"), icon: 'pi pi-fw pi-plus'
+        },
+
+      ];
+
+      this.cdr.detectChanges();
+    });
   }
 
 
@@ -95,16 +128,7 @@ export class AddCollaborateurComponent implements OnInit {
       }
     );
 
-    this.breadcrumbItems = [
 
-      {
-        label: 'Consult GRH', icon: 'pi pi-fw pi-search', routerLink: ['/collaborateurs']
-      },
-      {
-        label: 'Nouveau collaborateur', icon: 'pi pi-fw pi-plus'
-      },
-
-    ];
     this.loadDepartements();
     this.loadResponsables();
     this.loadContractTypes();
@@ -228,7 +252,7 @@ export class AddCollaborateurComponent implements OnInit {
         this.messageService.add({ severity: 'info', detail: 'Date fin de contrat doit etre après date début de contrat' })
         return;
       }
-      if(this.salaireDeBase<0){
+      if (this.salaireDeBase < 0) {
         this.messageService.add({ severity: 'info', detail: 'Salaire de base doit etre positive' })
         return;
       }
@@ -280,6 +304,7 @@ export class AddCollaborateurComponent implements OnInit {
           );
         });
         x.resetForm();
+        window.scroll(0, 0);
         this.recommendation = false;
 
       }, (error) => {
@@ -320,6 +345,7 @@ export class AddCollaborateurComponent implements OnInit {
   resetForm(form: NgForm): void {
     form.resetForm();
     this.recommendation = false;
+    window.scroll(0, 0);
   }
 
 

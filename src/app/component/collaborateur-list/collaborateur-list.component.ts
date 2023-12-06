@@ -32,7 +32,7 @@ export class CollaborateurListComponent implements OnInit {
   data: any;
   options: any;
   initialTranslationsLoaded: any;
-  consult: boolean=false;
+  consult: boolean = false;
 
   toggleRecommendation(value: boolean) {
     this.recommendation = value;
@@ -161,8 +161,8 @@ export class CollaborateurListComponent implements OnInit {
       this.cdr.detectChanges();
     });
   }
-  consultCollab(){
-    this.consult=true;
+  consultCollab() {
+    this.consult = true;
   }
 
   loadStatistics() {
@@ -238,9 +238,9 @@ export class CollaborateurListComponent implements OnInit {
     this.router.navigate(['/add-collaborateur']);
   }
 
-  updateCollab(collaborateur: Collaborateur,consult:boolean) {
+  updateCollab(collaborateur: Collaborateur, consult: boolean) {
     this.idOfCollabToUpdate = collaborateur.id;
-    this.consult=consult
+    this.consult = consult
     this.cin = collaborateur.cin;
     this.selectedDepartement = collaborateur.poste?.departement.depName;
     this.onDepartementChange(this.selectedDepartement);

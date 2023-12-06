@@ -2,7 +2,7 @@
   <p-breadcrumb [model]="breadcrumbItems" [home]="{icon: 'pi pi-home'}"></p-breadcrumb>
 </div>
 <ng-form #addForm="ngForm">
-  <p-card header="Informations Collaborateur">
+  <p-card header="{{'Informations Collaborateur'|translate}}">
     <div class="card p-fluid">
       <div class="p-formgrid grid">
         <div class="field col">
@@ -15,50 +15,50 @@
           </div>
         </div>
         <div class="field col">
-          <label for="nomComplet">Nom Complet*</label>
+          <label for="nomComplet">{{"Nom Complet"|translate}}*</label>
           <input pInputText id="nomComplet" name="nomComplet" type="text" [(ngModel)]="nomComplet" required />
         </div>
       </div>
       <div class="p-formgrid grid">
         <div class="field col">
-          <label for="numCompte">Num Compte*</label>
+          <label for="numCompte">{{"Num Compte"|translate}}*</label>
           <input pInputText id="numCompte" name="numCompte" type="number" [(ngModel)]="numCompte" required
             pattern="\d{13}" />
           <div
             *ngIf="addForm.controls['numCompte'].invalid && (addForm.controls['numCompte'].dirty || addForm.controls['numCompte'].touched)">
-            <small class="text-danger" *ngIf="addForm.controls['numCompte'].errors?.required">Num Compte is
-              required.</small>
-            <small class="text-danger" *ngIf="addForm.controls['numCompte'].errors?.pattern">Num Compte must be 13
-              digits.</small>
+            <small class="text-danger" *ngIf="addForm.controls['numCompte'].errors?.required">{{"Num Compte is
+              required"|translate}}.</small>
+            <small class="text-danger" *ngIf="addForm.controls['numCompte'].errors?.pattern">{{"Num Compte must be 13
+              digits"| translate}}.</small>
           </div>
 
         </div>
         <div class="field col">
-          <label for="numSecuriteSociale">Num Securite Sociale</label>
+          <label for="numSecuriteSociale">{{"Num Securite Sociale"|translate}}</label>
           <input pInputText id="numSecuriteSociale" name="numSecuriteSociale" type="number"
             [(ngModel)]="numSecuriteSociale" pattern="\d{15}" />
           <div
             *ngIf="addForm.controls['numSecuriteSociale'].invalid && (addForm.controls['numSecuriteSociale'].dirty || addForm.controls['numSecuriteSociale'].touched)">
-            <small class="text-danger" *ngIf="addForm.controls['numSecuriteSociale'].errors?.pattern">Num securite
-              sociale must be 15 digits.</small>
+            <small class="text-danger" *ngIf="addForm.controls['numSecuriteSociale'].errors?.pattern">{{"Num securite
+              sociale must be 15 digits"|translate}}.</small>
           </div>
         </div>
 
       </div>
       <div class="p-formgrid grid">
         <div class="field col">
-          <label for="dateNaissance">Date Naissance*</label>
+          <label for="dateNaissance">{{"Date Naissance"|translate}}*</label>
           <p-calendar [showIcon]="true" inputId="dateNaissance" name="dateNaissance" [required]="true"
             [(ngModel)]="dateNaissance" dateFormat="dd/mm/yy" [maxDate]="maxDate"></p-calendar>
         </div>
         <div class="field col">
-          <label for="numTelephone">Num Telephone*</label>
+          <label for="numTelephone">{{"Num Telephone"|translate}}*</label>
           <input pInputText id="numTelephone" name="numTelephone" type="number" [(ngModel)]="numTelephone" required />
         </div>
       </div>
       <div class="p-formgrid grid">
         <div class="field col">
-          <label for="adresse">Adresse</label>
+          <label for="adresse">{{"Adresse"|translate}}</label>
           <input pInputText id="adresse" name="adresse" type="text" [(ngModel)]="adresse" />
         </div>
         <div class="field col">
@@ -75,11 +75,11 @@
     </div>
   </p-card>
   <br>
-  <p-card header="Qualification">
+  <p-card header="{{'Qualification'|translate}}">
     <div class="card p-fluid">
       <div class="p-formgrid grid">
         <div class="field col">
-          <label for="natureEtude">Nature d'Etude*</label>
+          <label for="natureEtude">{{"Nature d'Etude"|translate}}*</label>
           <p-dropdown id="natureEtude" name="natureEtude" [options]="natureEtudeOptions"
             [(ngModel)]="selectedNatureEtude" [required]="true"></p-dropdown>
         </div>
@@ -90,12 +90,12 @@
       </div>
       <div class="p-formgrid grid">
         <div class="field col">
-          <label for="niveauEtude">Niveau d'Etude*</label>
+          <label for="niveauEtude">{{"Niveau d'Etude"|translate}}*</label>
           <p-dropdown id="niveauEtude" name="niveauEtude" [options]="niveauEtudeOptions"
             [(ngModel)]="selectedNiveauEtude" [required]="true"></p-dropdown>
         </div>
         <div class="field col">
-          <label for="anneeExperience">Annee d'Experience*</label>
+          <label for="anneeExperience">{{"Years of Experience"|translate}}*</label>
           <input pInputText id="anneeExperience" name="anneeExperience" type="text" [(ngModel)]="anneeExperience"
             [required]="true" />
         </div>
@@ -104,35 +104,35 @@
   </p-card>
   <br>
 
-  <p-card header="Contrat">
+  <p-card header="{{'Contrat'|translate}}">
     <div class="card p-fluid">
       <div class="p-formgrid grid">
         <div class="field col">
-          <label>Type de Contrat*</label>
+          <label>{{"Type de Contrat"|translate}}*</label>
           <p-dropdown id="typeContrat" name="typeContrat" (onChange)="OnSelectType()" [options]="contractTypesList"
             [(ngModel)]="selectedTypeContrat" placeholder="choisir un type de contrat"></p-dropdown>
         </div>
         <div class="field col">
-          <label>Salaire de Base*</label>
+          <label>{{"Salaire de Base"|translate}}*</label>
           <input pInputText id="salaireDeBase" name="salaireDeBase" [required]="true" type="number"
             [(ngModel)]="salaireDeBase" />
         </div>
       </div>
       <div class="p-formgrid grid">
         <div class="field col">
-          <label>Avantage sur Salaire</label>
+          <label>{{"Avantage sur Salaire"|translate}}</label>
           <p-dropdown id="avantageSalaire" name="avantageSalaire" [options]="avantages"
             [(ngModel)]="selectedAvantage"></p-dropdown>
         </div>
         <div class="field col">
-          <label>Date Début de Contrat</label>
+          <label>{{"Date Début de Contrat"|translate}}</label>
           <p-calendar [showIcon]="true" id="dateDebutContrat" name="dateDebutContrat"
             [(ngModel)]="dateDebutContrat"></p-calendar>
         </div>
       </div>
       <div *ngIf="selectedTypeContrat === 'CDD'" class="p-formgrid grid">
         <div class="field col">
-          <label>Date fin de Contrat</label>
+          <label>{{"Date fin de Contrat"|translate}}</label>
           <p-calendar [showIcon]="true" id="dateDebutContrat" [minDate]="dateDebutContrat" name="dateFinContrat"
             [(ngModel)]="dateFintContrat"></p-calendar>
         </div>
@@ -150,7 +150,7 @@
             placeholder="choisir departement" [(ngModel)]="selectedDepartement"></p-dropdown>
         </div>
         <div class="field col">
-          <label>Poste*</label>
+          <label>{{"Poste"|translate}}*</label>
           <p-dropdown id="poste" name="poste" [options]="postes" (onChange)="onPosteChange($event)"
             [(ngModel)]="selectedPoste" placeholder="choisir le poste"></p-dropdown>
         </div>
@@ -167,15 +167,15 @@
   </p-card>
   <br>
 
-  <p-card header="Pieces Jointes" class="pieces-card">
+  <p-card header="{{'Pieces Jointes'|translate}}" class="pieces-card">
     <div class="card p-fluid">
-      <p-fileUpload mode="basic" chooseLabel="Choose" [auto]="true" name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php"
-        accept=".pdf" [maxFileSize]="4 * 1024 * 1024" (onUpload)="onBasicUpload($event)"></p-fileUpload> <p-table
-        [value]="documents">
+      <p-fileUpload mode="basic" chooseLabel="Choose" [auto]="true" name="demo[]"
+        url="https://www.primefaces.org/cdn/api/upload.php" accept=".pdf" [maxFileSize]="4 * 1024 * 1024"
+        (onUpload)="onBasicUpload($event)"></p-fileUpload> <p-table [value]="documents">
         <ng-template pTemplate="header">
           <tr>
             <th>Documents</th>
-            <th>Obligatoire</th>
+            <th>{{"Obligatoire"|translate}}</th>
             <th>Status</th>
           </tr>
         </ng-template>
@@ -183,8 +183,8 @@
           <tr>
             <td>{{ document.name }}</td>
             <td>
-              <ng-container *ngIf="obligedDocuments.includes(document.name)">oui</ng-container>
-              <ng-container *ngIf="!obligedDocuments.includes(document.name)">non</ng-container>
+              <ng-container *ngIf="obligedDocuments.includes(document.name)">{{"oui"|translate}}</ng-container>
+              <ng-container *ngIf="!obligedDocuments.includes(document.name)">{{"non"|translate}}</ng-container>
             </td>
             <td>
               <p-checkbox [binary]="true" [disabled]="obligedDocuments.includes(document.name)"></p-checkbox>
@@ -198,7 +198,7 @@
   </p-card>
   <br>
 
-  <p-card header="Autre Informations">
+  <p-card header="{{'Autre Informations'|translate}}">
     <div class="card p-fluid">
       <div class="p-formgrid grid">
         <div class="field-checkbox">
@@ -206,13 +206,13 @@
           <label for="recommendation" class="ml-2">Recommendation</label>
         </div>
         <div *ngIf="recommendation != false" class="col-12 md:col-6">
-          <label>Collaborateur</label>
+          <label>{{"Collaborateur"|translate}}</label>
           <p-autoComplete id="collaborateurs" name="collaborateurs" type="text" [(ngModel)]="selectedCollabName"
             [suggestions]="collaborateursListFinal" (completeMethod)="search($event)"></p-autoComplete>
 
         </div>
         <div *ngIf="recommendation != false" class="col-12 md:col-4">
-          <label class="block text-sm font-medium text-gray-700">Comment</label>
+          <label class="block text-sm font-medium text-gray-700">{{"Comment"|translate}}</label>
           <textarea pInputTextarea id="comment" name="comment" [(ngModel)]="comment" class="mt-1 p-2"></textarea>
         </div>
       </div>
@@ -220,10 +220,10 @@
   </p-card>
   <p></p>
   <div class="modal-footer d-flex text-right">
-    <button pButton pRipple label="Initialiser" (click)="resetForm(addForm)" icon="pi pi-times"
+    <button pButton pRipple label="{{'Initialiser'|translate}}" (click)="resetForm(addForm)" icon="pi pi-times"
       class="p-button-text"></button>
-    <button [disabled]="addForm.invalid" (click)="addCollaborator(addForm)" pButton pRipple label="Enregistre"
-      icon="pi pi-check" class="p-button-text"></button>
+    <button [disabled]="addForm.invalid" (click)="addCollaborator(addForm)" pButton pRipple
+      label="{{'Enregistrer'|translate}}" icon="pi pi-check" class="p-button-text"></button>
   </div>
 
 

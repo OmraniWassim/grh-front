@@ -122,7 +122,8 @@
         <div class="p-formgrid grid">
           <div class="field col">
             <label for="cin">CIN*</label>
-            <input [disabled]="consult" pInputText id="cin" name="cin" type="number" [(ngModel)]="cin" required pattern="\d{8}" />
+            <input [disabled]="consult" pInputText id="cin" name="cin" type="number" [(ngModel)]="cin" required
+              pattern="\d{8}" />
             <div
               *ngIf="addForm.controls['cin'].invalid && (addForm.controls['cin'].dirty || addForm.controls['cin'].touched)">
               <small class="text-danger" *ngIf="addForm.controls['cin'].errors?.required">CIN is required.</small>
@@ -131,14 +132,15 @@
           </div>
           <div class="field col">
             <label for="nomComplet">Nom Complet*</label>
-            <input [disabled]="consult" pInputText id="nomComplet" name="nomComplet" type="text" [(ngModel)]="nomComplet" required />
+            <input [disabled]="consult" pInputText id="nomComplet" name="nomComplet" type="text"
+              [(ngModel)]="nomComplet" required />
           </div>
         </div>
         <div class="p-formgrid grid">
           <div class="field col">
             <label for="numCompte">Num Compte*</label>
-            <input  [disabled]="consult" pInputText id="numCompte" name="numCompte" type="number" [(ngModel)]="numCompte" required
-              pattern="\d{13}" />
+            <input [disabled]="consult" pInputText id="numCompte" name="numCompte" type="number" [(ngModel)]="numCompte"
+              required pattern="\d{13}" />
             <div
               *ngIf="addForm.controls['numCompte'].invalid && (addForm.controls['numCompte'].dirty || addForm.controls['numCompte'].touched)">
               <small class="text-danger" *ngIf="addForm.controls['numCompte'].errors?.required">Num Compte is
@@ -150,7 +152,7 @@
           </div>
           <div class="field col">
             <label for="numSecuriteSociale">Num Securite Sociale</label>
-            <input  [disabled]="consult" pInputText id="numSecuriteSociale" name="numSecuriteSociale" type="number"
+            <input [disabled]="consult" pInputText id="numSecuriteSociale" name="numSecuriteSociale" type="number"
               [(ngModel)]="numSecuriteSociale" pattern="\d{15}" />
             <div
               *ngIf="addForm.controls['numSecuriteSociale'].invalid && (addForm.controls['numSecuriteSociale'].dirty || addForm.controls['numSecuriteSociale'].touched)">
@@ -163,22 +165,23 @@
         <div class="p-formgrid grid">
           <div class="field col">
             <label for="dateNaissance">Date Naissance*</label>
-            <p-calendar  [disabled]="consult" [showIcon]="true" inputId="dateNaissance" name="dateNaissance" [required]="true"
-              [(ngModel)]="dateNaissance" dateFormat="dd/mm/yy"></p-calendar>
+            <p-calendar [disabled]="consult" [showIcon]="true" inputId="dateNaissance" name="dateNaissance"
+              [required]="true" [(ngModel)]="dateNaissance" dateFormat="dd/mm/yy"></p-calendar>
           </div>
           <div class="field col">
             <label for="numTelephone">Num Telephone*</label>
-            <input [disabled]="consult" pInputText id="numTelephone" name="numTelephone" type="number" [(ngModel)]="numTelephone" required />
+            <input [disabled]="consult" pInputText id="numTelephone" name="numTelephone" type="number"
+              [(ngModel)]="numTelephone" required />
           </div>
         </div>
         <div class="p-formgrid grid">
           <div class="field col">
             <label for="adresse">Adresse</label>
-            <input  [disabled]="consult" pInputText id="adresse" name="adresse" type="text" [(ngModel)]="adresse" />
+            <input [disabled]="consult" pInputText id="adresse" name="adresse" type="text" [(ngModel)]="adresse" />
           </div>
           <div class="field col">
             <label for="email">Email</label>
-            <input  [disabled]="consult" pInputText id="email" name="email" type="email"
+            <input [disabled]="consult" pInputText id="email" name="email" type="email"
               pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" [(ngModel)]="email" mail />
             <div
               *ngIf="addForm.controls['email'].invalid && (addForm.controls['email'].dirty || addForm.controls['email'].touched)">
@@ -194,25 +197,26 @@
       <div class="card p-fluid">
         <div class="p-formgrid grid">
           <div class="field col">
-            <label   for="natureEtude">Nature d'Etude*</label>
+            <label for="natureEtude">Nature d'Etude*</label>
             <p-dropdown [disabled]="consult" id="natureEtude" name="natureEtude" [options]="natureEtudeOptions"
               [(ngModel)]="selectedNatureEtude" [required]="true" [ngModelOptions]="{ standalone: true }"></p-dropdown>
           </div>
           <div class="field col">
             <label for="certifications">Certifications</label>
-            <input [disabled]="consult" pInputText id="certifications" name="certifications" type="text" [(ngModel)]="certifications" />
+            <input [disabled]="consult" pInputText id="certifications" name="certifications" type="text"
+              [(ngModel)]="certifications" />
           </div>
         </div>
         <div class="p-formgrid grid">
           <div class="field col">
             <label for="niveauEtude">Niveau d'Etude*</label>
-            <p-dropdown  [disabled]="consult" id="niveauEtude" name="niveauEtude" [options]="niveauEtudeOptions"
+            <p-dropdown [disabled]="consult" id="niveauEtude" name="niveauEtude" [options]="niveauEtudeOptions"
               [(ngModel)]="selectedNiveauEtude" [required]="true" [ngModelOptions]="{ standalone: true }"></p-dropdown>
           </div>
           <div class="field col">
             <label for="anneeExperience">Annee d'Experience*</label>
-            <input  [disabled]="consult" pInputText id="anneeExperience" name="anneeExperience" type="text" [(ngModel)]="anneeExperience"
-              [required]="true" />
+            <input [disabled]="consult" pInputText id="anneeExperience" name="anneeExperience" type="text"
+              [(ngModel)]="anneeExperience" [required]="true" />
           </div>
         </div>
       </div>
@@ -223,33 +227,33 @@
         <div class="p-formgrid grid">
           <div class="field col">
             <label>Type de Contrat*</label>
-            <p-dropdown [disabled]="consult"  id="typeContrat" name="typeContrat" (onChange)="OnSelectType(true)"
+            <p-dropdown [disabled]="consult" id="typeContrat" name="typeContrat" (onChange)="OnSelectType(true)"
               [options]="contractTypesList" [(ngModel)]="selectedTypeContrat"
               placeholder="choisir un type de contrat"></p-dropdown>
           </div>
           <div class="field col">
             <label>Salaire de Base*</label>
-            <input  [disabled]="consult" pInputText id="salaireDeBase" name="salaireDeBase" [required]="true" type="text"
+            <input [disabled]="consult" pInputText id="salaireDeBase" name="salaireDeBase" [required]="true" type="text"
               [(ngModel)]="salaireDeBase" />
           </div>
         </div>
         <div class="p-formgrid grid">
           <div class="field col">
             <label>Avantage sur Salaire</label>
-            <p-dropdown  [disabled]="consult" id="avantageSalaire" name="avantageSalaire" [options]="avantages"
+            <p-dropdown [disabled]="consult" id="avantageSalaire" name="avantageSalaire" [options]="avantages"
               [(ngModel)]="selectedAvantage"></p-dropdown>
           </div>
           <div class="field col">
             <label>Date Début de Contrat</label>
-            <p-calendar  [disabled]="consult" [showIcon]="true" id="dateDebutContrat" name="dateDebutContrat"
+            <p-calendar [disabled]="consult" [showIcon]="true" id="dateDebutContrat" name="dateDebutContrat"
               [(ngModel)]="dateDebutContrat"></p-calendar>
           </div>
         </div>
         <div *ngIf="selectedTypeContrat === 'CDD'" class="p-formgrid grid">
           <div class="field col">
             <label>Date fin de Contrat</label>
-            <p-calendar  [disabled]="consult" [showIcon]="true" id="dateDebutContrat" name="dateFinContrat" [minDate]="dateDebutContrat"
-              [(ngModel)]="dateFinContrat"></p-calendar>
+            <p-calendar [disabled]="consult" [showIcon]="true" id="dateDebutContrat" name="dateFinContrat"
+              [minDate]="dateDebutContrat" [(ngModel)]="dateFinContrat"></p-calendar>
           </div>
         </div>
       </div>
@@ -260,20 +264,20 @@
         <div class="p-formgrid grid">
           <div class="field col">
             <label>Dpartement*</label>
-            <p-dropdown [disabled]="consult"  [options]="departmentsList" (onChange)="onDepartementChange($event.value)"
+            <p-dropdown [disabled]="consult" [options]="departmentsList" (onChange)="onDepartementChange($event.value)"
               [(ngModel)]="selectedDepartement" [ngModelOptions]="{ standalone: true }"></p-dropdown>
           </div>
           <div class="field col">
             <label>Poste*</label>
-            <p-dropdown  [disabled]="consult" id="poste" name="poste" [options]="postes" (onChange)="onPosteChange($event)"
-              [(ngModel)]="selectedPoste"></p-dropdown>
+            <p-dropdown [disabled]="consult" id="poste" name="poste" [options]="postes"
+              (onChange)="onPosteChange($event)" [(ngModel)]="selectedPoste"></p-dropdown>
           </div>
         </div>
         <div class="p-formgrid grid">
           <div *ngIf="showResponsableDropdown === true" class="field col">
             <label>Responsable</label>
-            <p-dropdown  [disabled]="consult" id="responsable" name="responsable" [options]="responsables" [(ngModel)]="selectedResponsable"
-              [ngModelOptions]="{ standalone: true }"></p-dropdown>
+            <p-dropdown [disabled]="consult" id="responsable" name="responsable" [options]="responsables"
+              [(ngModel)]="selectedResponsable" [ngModelOptions]="{ standalone: true }"></p-dropdown>
           </div>
         </div>
       </div>
@@ -282,7 +286,7 @@
     <br>
     <p-card *ngIf="!consult" header="Pieces Jointes" class="pieces-card">
       <div class="card p-fluid">
-        <p-fileUpload  [disabled]="consult" mode="basic" chooseLabel="Choose" name="demo[]"
+        <p-fileUpload [disabled]="consult" mode="basic" chooseLabel="Choose" name="demo[]"
           url="https://www.primefaces.org/cdn/api/upload.php" accept=".pdf" [maxFileSize]="4 * 1024 * 1024"
           (onUpload)="onBasicUpload($event)"></p-fileUpload> <p-table [value]="documents">
           <ng-template pTemplate="header">
@@ -314,19 +318,21 @@
       <div class="card p-fluid">
         <div class="p-formgrid grid">
           <div class="field-checkbox">
-            <p-checkbox [disabled]="consult" name="group1" [binary]="true" [(ngModel)]="recommendation" id="recommendation"
-              (ngModelChange)="toggleRecommendation($event)"></p-checkbox>
+            <p-checkbox [disabled]="consult" name="group1" [binary]="true" [(ngModel)]="recommendation"
+              id="recommendation" (ngModelChange)="toggleRecommendation($event)"></p-checkbox>
             <label for="recommendation" class="ml-2">Recommendation</label>
           </div>
           <div *ngIf="recommendation != false" class="col-12 md:col-6">
             <label>Collaborateur</label>
-            <p-autoComplete  [disabled]="consult" id="collaborateurs" name="collaborateurs" type="text" [(ngModel)]="selectedCollabName"
-              [suggestions]="collaborateursListFinal" (completeMethod)="search($event)"></p-autoComplete>
+            <p-autoComplete [disabled]="consult" id="collaborateurs" name="collaborateurs" type="text"
+              [(ngModel)]="selectedCollabName" [suggestions]="collaborateursListFinal"
+              (completeMethod)="search($event)"></p-autoComplete>
 
           </div>
           <div *ngIf="recommendation != false" class="col-12 md:col-4">
             <label class="block text-sm font-medium text-gray-700">Comment</label>
-            <textarea  [disabled]="consult" pInputTextarea id="comment" name="comment" [(ngModel)]="comment" class="mt-1 p-2"></textarea>
+            <textarea [disabled]="consult" pInputTextarea id="comment" name="comment" [(ngModel)]="comment"
+              class="mt-1 p-2"></textarea>
           </div>
 
         </div>
@@ -335,7 +341,7 @@
     <br>
     <div class="modal-footer d-flex justify-content-end">
       <button *ngIf="!consult" pButton pRipple label="Cancel" class="p-button-text" (click)="hideDialog()"></button>
-      <button  *ngIf="!consult" pButton pRipple label="Save" class="p-button-success p-button-text"
+      <button *ngIf="!consult" pButton pRipple label="Save" class="p-button-success p-button-text"
         (click)="saveUpdate(addForm)"></button>
     </div>
 
