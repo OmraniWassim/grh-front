@@ -36,5 +36,8 @@
   "Informations Collaborateur": "Collaborator Information",
   "Contrat": "Contract",
   "Pieces Jointes": "Attachments",
-  "Autre Informations": "Other Information"
+  "Autre Informations": "Other Information",
+  "Choose":"choose",
+  "Max file size reached":"file is too big",
+  "Its shouldnt pass this size": "maximum accepted size is "
 }

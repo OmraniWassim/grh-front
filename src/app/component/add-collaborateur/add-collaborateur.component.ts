@@ -169,8 +169,6 @@ export class AddCollaborateurComponent implements OnInit {
     );
 
   }
-
-
   loadContractTypes(): void {
     this.contractTypeService.getAllContractTypes().subscribe(
       (data) => {
@@ -347,11 +345,5 @@ export class AddCollaborateurComponent implements OnInit {
     this.recommendation = false;
     window.scroll(0, 0);
   }
-
-
-
-
-
-
 
 }

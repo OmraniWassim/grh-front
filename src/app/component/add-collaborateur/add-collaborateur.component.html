@@ -133,7 +133,7 @@
       <div *ngIf="selectedTypeContrat === 'CDD'" class="p-formgrid grid">
         <div class="field col">
           <label>{{"Date fin de Contrat"|translate}}</label>
-          <p-calendar [showIcon]="true" id="dateDebutContrat" [minDate]="dateDebutContrat" name="dateFinContrat"
+          <p-calendar [showIcon]="true" id="dateFinContrat" [minDate]="dateDebutContrat" name="dateFinContrat"
             [(ngModel)]="dateFintContrat"></p-calendar>
         </div>
       </div>
@@ -169,8 +169,9 @@
 
   <p-card header="{{'Pieces Jointes'|translate}}" class="pieces-card">
     <div class="card p-fluid">
-      <p-fileUpload mode="basic" chooseLabel="Choose" [auto]="true" name="demo[]"
-        url="https://www.primefaces.org/cdn/api/upload.php" accept=".pdf" [maxFileSize]="4 * 1024 * 1024"
+      <p-fileUpload mode="basic" chooseLabel="{{'Choose'|translate}}"  name="demo[]"
+        url="https://www.primefaces.org/cdn/api/upload.php" accept=".pdf" [maxFileSize]="4 * 1024 * 1024" invalidFileSizeMessageSummary="{{'Max file size reached'|translate}}, "
+        invalidFileSizeMessageDetail="{{'Its shouldnt pass this size'|translate}} 4MB."
         (onUpload)="onBasicUpload($event)"></p-fileUpload> <p-table [value]="documents">
         <ng-template pTemplate="header">
           <tr>

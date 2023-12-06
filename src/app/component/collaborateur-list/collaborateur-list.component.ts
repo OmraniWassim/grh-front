@@ -424,12 +424,14 @@ export class CollaborateurListComponent implements OnInit {
     );
   }
 
-  saveUpdate(x: NgForm) {
-    if (this.selectedContractType != "CDD") {
-      this.dateFinContrat = new Date;
-    }
+  saveUpdate(submittedForm: NgForm) {
+    console.log("value", submittedForm.value.dateFinContrat);
 
-    if (this.dateFinContrat <= this.dateDebutContrat) {
+    if (this.salaireDeBase < 0) {
+      this.messageService.add({ severity: 'info', detail: 'Salaire de base doit etre positive' })
+      return;
+    }
+    if (this.dateFinContrat <= this.dateDebutContrat && submittedForm.value.dateFinContrat) {
       this.messageService.add({ severity: 'info', detail: 'Date fin de contrat doit etre après date début de contrat' })
       return;
     }
@@ -437,12 +439,12 @@ export class CollaborateurListComponent implements OnInit {
 
     const etudeLevelId = this.etudeLevelList?.find(o => o.niveaux === this.selectedNiveauEtude)?.id;
 
-    const contractTypeId = this.contractTypes.find(o => o.type === x.value.typeContrat)?.id;
+    const contractTypeId = this.contractTypes.find(o => o.type === submittedForm.value.typeContrat)?.id;
 
 
-    const salaryAdvantageId = this.avantagesList?.find(o => o.advantage === x.value.avantageSalaire)?.id;
+    const salaryAdvantageId = this.avantagesList?.find(o => o.advantage === submittedForm.value.avantageSalaire)?.id;
 
-    const posteId = this.postesList?.find(o => o.posteName === x.value.poste)?.id;
+    const posteId = this.postesList?.find(o => o.posteName === submittedForm.value.poste)?.id;
 
     const responsableId = this.responsablesList?.find(o => o.resName === this.selectedResponsable)?.id;
 
@@ -450,22 +452,22 @@ export class CollaborateurListComponent implements OnInit {
 
     const requestPayload: Collaborateur = {
       id: this.idOfCollabToUpdate,
-      cin: x.value.cin,
-      nomComplet: x.value.nomComplet,
-      numCompte: x.value.numCompte,
-      numSecuriteSociale: x.value.numSecuriteSociale,
-      numTelephone: x.value.numTelephone,
-      dateNaissance: new Date(x.value.dateNaissance),
-      adresse: x.value.adresse,
-      email: x.value.email,
-      salaireDeBase: x.value.salaireDeBase,
-      certifications: x.value.certifications,
-      anneeExperience: x.value.anneeExperience,
-      dateDebutContrat: new Date(x.value.dateDebutContrat),
-      dateFinContrat: new Date(x.value.dateFinContrat),
+      cin: submittedForm.value.cin,
+      nomComplet: submittedForm.value.nomComplet,
+      numCompte: submittedForm.value.numCompte,
+      numSecuriteSociale: submittedForm.value.numSecuriteSociale,
+      numTelephone: submittedForm.value.numTelephone,
+      dateNaissance: new Date(submittedForm.value.dateNaissance),
+      adresse: submittedForm.value.adresse,
+      email: submittedForm.value.email,
+      salaireDeBase: submittedForm.value.salaireDeBase,
+      certifications: submittedForm.value.certifications,
+      anneeExperience: submittedForm.value.anneeExperience,
+      dateDebutContrat: new Date(submittedForm.value.dateDebutContrat),
+      dateFinContrat: new Date(submittedForm.value.dateFinContrat),
       recommandation: this.recommendation ? true : false,
-      collaborateurRecommande: x.value.collaborateurs,
-      commentaire: x.value.comment,
+      collaborateurRecommande: submittedForm.value.collaborateurs,
+      commentaire: submittedForm.value.comment,
     };
 
     if (!this.uploadedFiles) {
@@ -503,7 +505,7 @@ export class CollaborateurListComponent implements OnInit {
       ).subscribe(data => {
         this.collabDialog = false;
         this.uploadedFiles.forEach((file: File) => {
-          this.sannedDocumentService.uploadPdf(file, x.value.cin).subscribe(data => {
+          this.sannedDocumentService.uploadPdf(file, submittedForm.value.cin).subscribe(data => {
 
           }, (error) => {
             if (error.status === 200) {
