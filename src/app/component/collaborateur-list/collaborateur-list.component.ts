@@ -22,6 +22,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { TranslationService } from 'src/app/service/Translation.service';
 import { Subscription } from 'rxjs';
 
+
 @Component({
   selector: 'app-collaborateur-list',
   templateUrl: './collaborateur-list.component.html',
